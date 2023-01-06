@@ -1,6 +1,10 @@
+import "bootstrap/dist/css/bootstrap.css"
+
 function index(props) {
-    return(
-        <h1>Chords</h1>
+    return (
+        <div className="bg-dark text-white">
+            <h1 className="display-1 text-center">Chords</h1>
+        </div>
     )
 }
 
