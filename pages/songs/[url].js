@@ -2,6 +2,9 @@ import { useState, useEffect } from 'react';
 import { transpose } from 'chord-transposer';
 import { useRouter } from 'next/router'
 import { MongoClient } from 'mongodb'
+import Navbar from "../../components/Navbar.js"
+
+
 
 // Client
 export default function Song(props) {
@@ -11,12 +14,13 @@ export default function Song(props) {
   const song = JSON.parse(props.song)
 
   const [text, setText] = useState(song.text);
+  const [name, setName] = useState(song.name);
   const [editMode, setEditMode] = useState(false);
 
   useEffect(() => {
     console.log('useEffect');
     let textarea = document.getElementById('textarea')
-    textarea.style.height = (window.innerHeight - 120).toString() + "px"
+    textarea.style.height = (window.innerHeight - 160).toString() + "px"
   }, [])
 
   const transposeUp = () => {
@@ -37,7 +41,15 @@ export default function Song(props) {
 
   return (
     <div className="bg-black text-white p-3">
-      <h1 className="display-3">Text title</h1>
+      <Navbar />
+      <input className="display-3 bg-black text-white"
+        value={name}
+        onChange={(e) => {
+          setName(e.target.value)
+        }} 
+        disabled={!editMode}/>
+
+
       <div className='row mb-3'>
         <div className='col' style={{ display: (editMode) ? "none" : "" }}>
           <div className='btn-group'>
@@ -90,7 +102,7 @@ export async function getServerSideProps(context) {
     .find({ url: context.params.url })
     .toArray();
 
-  let result = {text:'not found'}
+  let result = { text: 'not found' }
   if (songs.length > 0) result = songs[0]
 
   return {
