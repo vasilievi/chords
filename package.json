@@ -1,11 +1,12 @@
 {
-    "scripts": {
-        "dev": "next dev"
-    },
-    "dependencies": {
-        "bootstrap": "^5.2.3",
-        "next": "^13.1.1",
-        "react": "^18.2.0",
-        "react-dom": "^18.2.0"
-    }
+  "scripts": {
+    "dev": "next dev"
+  },
+  "dependencies": {
+    "bootstrap": "^5.2.3",
+    "chord-transposer": "^3.0.1",
+    "next": "^13.1.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
 }
