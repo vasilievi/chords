@@ -100,7 +100,7 @@ function homePage(params) {
                     <div className='btn-group'>
                         <button className='btn btn-outline-light' onClick={transposeUp}>+</button>
                         <button className='btn btn-outline-light' onClick={transposeDown}>-</button>
-                        <button className='btn btn-outline-light' onClick={transposeDown}>Reset transpose</button>
+                        <button className='btn btn-outline-light' onClick={transposeDown}>Reset</button>
                     </div>
                 </div>
                 <div className='col'>
