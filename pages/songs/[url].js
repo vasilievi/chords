@@ -33,11 +33,11 @@ export default function Song(props) {
   }
 
   const transposeUp = () => {
-    setSong({ ...song, text: transpose(text).up(1).toString() })
+    setSong({ ...song, text: transpose(song.text).up(1).toString() })
   }
 
   const transposeDown = () => {
-    setSong({ ...song, text: transpose(text).down(1).toString() })
+    setSong({ ...song, text: transpose(song.text).down(1).toString() })
   }
 
   const edit = () => {
