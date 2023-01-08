@@ -14,6 +14,7 @@ export default function Song(props) {
   const [text, setText] = useState(song.text);
   const [name, setName] = useState(song.name);
   const [editMode, setEditMode] = useState(false);
+  const [spinner, setSpinner] = useState(false);
 
   useEffect(() => {
     console.log('useEffect');
@@ -39,8 +40,34 @@ export default function Song(props) {
     setEditMode(true)
   }
 
-  const save = () => {
-    setEditMode(false)
+  const save = async (e) => {
+
+    e.target.disabled = true
+    setSpinner(true)
+
+    let response = await fetch('/api/postSong', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8'
+      },
+      body: JSON.stringify({
+        url: url,
+        name: name,
+        text: text
+      })
+    });
+
+    if (response.status === 200) {
+      setEditMode(false)
+    }
+
+    if (response.status !== 200) {
+      let result = response.json()
+      console.log(result);
+    }
+
+    e.target.disabled = false
+    setSpinner(false)
   }
 
   return (
@@ -75,6 +102,15 @@ export default function Song(props) {
             onClick={save}
             style={{ display: (editMode) ? "" : "none" }}
           >Save</button>
+        </div>
+        <div className='col'>
+          <div
+            style={{ display: (spinner) ? "" : "none" }}
+            className="spinner-grow text-light"
+            role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+
         </div>
       </div>
 
