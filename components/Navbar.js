@@ -1,12 +1,13 @@
 import Link from 'next/link'
 import Router from "next/router";
+import { useRouter } from 'next/navigation'
 import { useState } from 'react';
 import AsyncSelect from 'react-select/async';
 
 
 export default function Navbar(props) {
+    const router = useRouter();
     const [spinner, setSpinner] = useState(false);
-    const [search, setSearch] = useState('');
 
     let defaultOptions = []
 
@@ -57,10 +58,9 @@ export default function Navbar(props) {
                         loadOptions={loadOptions}
                         placeholder='Search'
                         components={{ DropdownIndicator: () => null, IndicatorSeparator: () => null }}
-                        value={search}
-                        onChange={(value) => {
-                            setSearch(value)
-                            
+                        onChange={(selectedValue) => {
+                            console.log('onChange');
+                            router.push('/songs/'+selectedValue.value)
                         }}
                     />
                 </div>

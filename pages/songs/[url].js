@@ -3,6 +3,7 @@ import { transpose } from 'chord-transposer';
 import { useRouter } from 'next/router'
 import { MongoClient } from 'mongodb'
 import Navbar from "../../components/Navbar.js"
+import Footer from "../../components/Footer.js"
 import * as Icon from 'react-feather';
 
 // Client
@@ -10,19 +11,20 @@ export default function Song(props) {
 
   const router = useRouter()
   const { url } = router.query
-  const song = JSON.parse(props.song)
-
-  const [text, setText] = useState(song.text);
-  const [name, setName] = useState(song.name);
   const [editMode, setEditMode] = useState(false);
   const [spinner, setSpinner] = useState(false);
   const [scrolling, setScrolling] = useState(false);
 
+  const [song, setSong] = useState({ name: '', text: '' });
+
   useEffect(() => {
     console.log('useEffect');
-    let textarea = document.getElementById('textarea')
-    textarea.setAttribute("style", "height:" + (textarea.scrollHeight) + "px;overflow-y:hidden;");
-  }, [])
+    setSong(JSON.parse(props.song))
+
+    setInterval(() => {
+      autoHeight()
+    }, 1000);
+  }, [props.song])
 
   const autoHeight = () => {
     console.log('autoHeight');
@@ -31,11 +33,11 @@ export default function Song(props) {
   }
 
   const transposeUp = () => {
-    setText(transpose(text).up(1).toString());
+    setSong({ ...song, text: transpose(text).up(1).toString() })
   }
 
   const transposeDown = () => {
-    setText(transpose(text).down(1).toString());
+    setSong({ ...song, text: transpose(text).down(1).toString() })
   }
 
   const edit = () => {
@@ -54,8 +56,8 @@ export default function Song(props) {
       },
       body: JSON.stringify({
         url: url,
-        name: name,
-        text: text
+        name: song.name,
+        text: song.text
       })
     });
 
@@ -88,67 +90,71 @@ export default function Song(props) {
   }
 
   return (
-    <div className="bg-black text-white p-3">
+    <div className="bg-black">
       <Navbar />
 
-      {/* Header */}
-      <textarea
-        className="form-control font-monospace form-control-lg bg-black text-warning mb-3"
-        disabled={(editMode) ? false : true}
-        value={name}
-        onChange={(e) => {
-          setName(e.target.value)
-        }}></textarea>
+      <div className="m-3">
+        {/* Header */}
+        <textarea
+          className="form-control font-monospace form-control-lg bg-black text-warning mb-3"
+          disabled={(editMode) ? false : true}
+          value={song.name}
+          onChange={(e) => {
+            setSong({ ...song, name: e.target.value })
+          }}></textarea>
 
-      {/* Buttons */}
-      <div className='row mb-3'>
-        <div className='col'>
-          <div className='btn-group'>
-            <button className='btn btn-outline-light' onClick={transposeUp}><Icon.Plus /></button>
+        {/* Buttons */}
+        <div className='row mb-3'>
+          <div className='col'>
+            <div className='btn-group'>
+              <button className='btn btn-outline-light' onClick={transposeUp}><Icon.Plus /></button>
 
-            <button className='btn btn-outline-light' onClick={transposeDown}><Icon.Minus /></button>
+              <button className='btn btn-outline-light' onClick={transposeDown}><Icon.Minus /></button>
 
-            <button className='btn btn-outline-light'
-              onClick={startScroll}
-              style={{ display: (scrolling) ? "none" : "" }}><Icon.PlayCircle /></button>
+              <button className='btn btn-outline-light'
+                onClick={startScroll}
+                style={{ display: (scrolling) ? "none" : "" }}><Icon.PlayCircle /></button>
 
-            <button className='btn btn-outline-warning'
-              onClick={stopScroll}
-              style={{ display: (scrolling) ? "" : "none" }}><Icon.StopCircle /></button>
+              <button className='btn btn-outline-warning'
+                onClick={stopScroll}
+                style={{ display: (scrolling) ? "" : "none" }}><Icon.StopCircle /></button>
 
-            <button className='btn btn-outline-warning'
-              onClick={save}
-              style={{ display: (editMode) ? "" : "none" }}
-            >Save</button>
+              <button className='btn btn-outline-warning'
+                onClick={save}
+                style={{ display: (editMode) ? "" : "none" }}
+              >Save</button>
 
-            <button
-              className='btn btn-outline-light'
-              onClick={edit}
-              style={{ display: (editMode) ? "none" : "" }}
-            ><Icon.Edit /></button>
+              <button
+                className='btn btn-outline-light'
+                onClick={edit}
+                style={{ display: (editMode) ? "none" : "" }}
+              ><Icon.Edit /></button>
+            </div>
+          </div>
+          <div className='col'>
+            <div
+              style={{ display: (spinner) ? "" : "none" }}
+              className="spinner-grow text-light"
+              role="status">
+              <span className="visually-hidden">Loading...</span>
+            </div>
+
           </div>
         </div>
-        <div className='col'>
-          <div
-            style={{ display: (spinner) ? "" : "none" }}
-            className="spinner-grow text-light"
-            role="status">
-            <span className="visually-hidden">Loading...</span>
-          </div>
 
-        </div>
+        {/* Text */}
+        <textarea
+          id='textarea'
+          className="form-control font-monospace form-control-lg bg-black text-white mb-3"
+          disabled={(editMode) ? false : true}
+          value={song.text}
+          onChange={(e) => {
+            setSong({ ...song, text: e.target.value })
+            autoHeight()
+          }}></textarea>
       </div>
 
-      {/* Text */}
-      <textarea
-        id='textarea'
-        className="form-control font-monospace form-control-lg bg-black text-white"
-        disabled={(editMode) ? false : true}
-        value={text}
-        onChange={(e) => {
-          setText(e.target.value)
-          autoHeight()
-        }}></textarea>
+      <Footer />
     </div>
   )
 }

@@ -1,4 +1,5 @@
 import Navbar from "../components/Navbar.js"
+import Footer from "../components/Footer.js"
 import Carousel from "../components/Carousel.js"
 import Link from 'next/link'
 import { MongoClient } from 'mongodb'
@@ -41,6 +42,8 @@ function homePage(props) {
                     </li>
                 ))}
             </ul>
+
+            <Footer />
         </div>
     )
 }
