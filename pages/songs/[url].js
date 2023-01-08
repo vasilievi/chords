@@ -4,8 +4,6 @@ import { useRouter } from 'next/router'
 import { MongoClient } from 'mongodb'
 import Navbar from "../../components/Navbar.js"
 
-
-
 // Client
 export default function Song(props) {
 
@@ -20,8 +18,14 @@ export default function Song(props) {
   useEffect(() => {
     console.log('useEffect');
     let textarea = document.getElementById('textarea')
-    textarea.style.height = (window.innerHeight - 160).toString() + "px"
+    textarea.setAttribute("style", "height:" + (textarea.scrollHeight) + "px;overflow-y:hidden;");
   }, [])
+
+  const autoHeight = () => {
+    console.log('autoHeight');
+    let textarea = document.getElementById('textarea')
+    textarea.setAttribute("style", "height:" + (textarea.scrollHeight) + "px;overflow-y:hidden;");
+  }
 
   const transposeUp = () => {
     setText(transpose(text).up(1).toString());
@@ -42,14 +46,17 @@ export default function Song(props) {
   return (
     <div className="bg-black text-white p-3">
       <Navbar />
-      <input className="display-3 bg-black text-white"
+
+      {/* Header */}
+      <textarea
+        className="form-control font-monospace form-control-lg bg-black text-white mb-3"
+        disabled={(editMode) ? false : true}
         value={name}
         onChange={(e) => {
           setName(e.target.value)
-        }} 
-        disabled={!editMode}/>
+        }}></textarea>
 
-
+      {/* Buttons */}
       <div className='row mb-3'>
         <div className='col' style={{ display: (editMode) ? "none" : "" }}>
           <div className='btn-group'>
@@ -70,6 +77,8 @@ export default function Song(props) {
           >Save</button>
         </div>
       </div>
+
+      {/* Text */}
       <textarea
         id='textarea'
         className="form-control font-monospace form-control-lg bg-black text-white"
@@ -77,6 +86,7 @@ export default function Song(props) {
         value={text}
         onChange={(e) => {
           setText(e.target.value)
+          autoHeight()
         }}></textarea>
     </div>
   )
