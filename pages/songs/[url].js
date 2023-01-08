@@ -76,7 +76,7 @@ export default function Song(props) {
 
       {/* Header */}
       <textarea
-        className="form-control font-monospace form-control-lg bg-black text-white mb-3"
+        className="form-control font-monospace form-control-lg bg-black text-warning mb-3"
         disabled={(editMode) ? false : true}
         value={name}
         onChange={(e) => {
@@ -85,11 +85,10 @@ export default function Song(props) {
 
       {/* Buttons */}
       <div className='row mb-3'>
-        <div className='col' style={{ display: (editMode) ? "none" : "" }}>
+        <div className='col'>
           <div className='btn-group'>
             <button className='btn btn-outline-light' onClick={transposeUp}>+</button>
             <button className='btn btn-outline-light' onClick={transposeDown}>-</button>
-            <button className='btn btn-outline-light' onClick={transposeDown}>Reset</button>
           </div>
         </div>
         <div className='col'>
