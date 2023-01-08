@@ -2,12 +2,10 @@ import Navbar from "../components/Navbar.js"
 import Carousel from "../components/Carousel.js"
 import Link from 'next/link'
 import { MongoClient } from 'mongodb'
-import { useState } from 'react';
 
 
 function homePage(props) {
 
-    const [spinner, setSpinner] = useState(false);
     const songs = JSON.parse(props.songs)
 
     return (
@@ -23,15 +21,19 @@ function homePage(props) {
                                 <Link
                                     className="text-white"
                                     href={"/songs/" + song.url}
-                                    onClick={() => {
-                                        setSpinner(true)
+                                    spinner-id={"spinner-" + index}
+                                    onClick={(e) => {
+                                        console.log(e.target);
+                                        const spinner = document.getElementById(e.target.attributes['spinner-id'].value)
+                                        spinner.style.display=''
                                     }}>{song.name}</Link>
                             </div>
                             <div className="col">
                                 <div
-                                    style={{ display: (spinner) ? "" : "none" }}
+                                    id={"spinner-" + index}
                                     className="spinner-grow text-light"
-                                    role="status">
+                                    role="status"
+                                    style={{"display": "none"}}>
                                     <span className="visually-hidden">Loading...</span>
                                 </div>
                             </div>
