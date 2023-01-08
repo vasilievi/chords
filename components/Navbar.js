@@ -36,23 +36,22 @@ export default function Navbar(props) {
     return (
         <div className='p-3'>
             <div className="row">
-                <div className='col-5'>
+                <div className='col-3' style={{ display: (spinner) ? "none" : "" }}>
                     <Link
                         href="/"
                         className="text-white no-underline">Chords
                     </Link>
                 </div>
 
-                <div className='col-2'>
+                <div className='col-3' style={{ display: (spinner) ? "" : "none" }}>
                     <div
-                        style={{ display: (spinner) ? "" : "none" }}
                         className="spinner-grow text-light"
                         role="status">
                         <span className="visually-hidden">Loading...</span>
                     </div>
                 </div>
 
-                <div className='col-5'>
+                <div className='col-9'>
                     <AsyncSelect
                         defaultOptions={defaultOptions}
                         loadOptions={loadOptions}

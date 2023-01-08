@@ -21,9 +21,9 @@ export default function Song(props) {
     console.log('useEffect');
     setSong(JSON.parse(props.song))
 
-    setInterval(() => {
+    setTimeout(() => {
       autoHeight()
-    }, 1000);
+    }, 500);
   }, [props.song])
 
   const autoHeight = () => {

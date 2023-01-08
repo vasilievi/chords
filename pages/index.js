@@ -18,9 +18,9 @@ function homePage(props) {
                 {songs.map((song, index) => (
                     <li key={index} className="list-group-item bg-black">
                         <div className="row">
-                            <div className="col">
+                            <div className="col-9">
                                 <Link
-                                    className="text-white"
+                                    className="text-white no-underline"
                                     href={"/songs/" + song.url}
                                     spinner-id={"spinner-" + index}
                                     onClick={(e) => {
@@ -29,7 +29,7 @@ function homePage(props) {
                                         spinner.style.display=''
                                     }}>{song.name}</Link>
                             </div>
-                            <div className="col">
+                            <div className="col-3">
                                 <div
                                     id={"spinner-" + index}
                                     className="spinner-grow text-light"
