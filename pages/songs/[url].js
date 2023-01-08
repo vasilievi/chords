@@ -179,7 +179,7 @@ export async function getServerSideProps(context) {
     .find({ url: context.params.url })
     .toArray();
 
-  let result = { text: 'not found' }
+  let result = { name: 'not found', text: 'not found' }
   if (songs.length > 0) result = songs[0]
 
   return {
