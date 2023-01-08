@@ -36,14 +36,14 @@ export default function Navbar(props) {
     return (
         <div className='p-3'>
             <div className="row">
-                <div className='col'>
+                <div className='col-5'>
                     <Link
                         href="/"
                         className="text-white no-underline">Chords
                     </Link>
                 </div>
 
-                <div className='col'>
+                <div className='col-2'>
                     <div
                         style={{ display: (spinner) ? "" : "none" }}
                         className="spinner-grow text-light"
@@ -52,7 +52,7 @@ export default function Navbar(props) {
                     </div>
                 </div>
 
-                <div className='col'>
+                <div className='col-5'>
                     <AsyncSelect
                         defaultOptions={defaultOptions}
                         loadOptions={loadOptions}
