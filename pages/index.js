@@ -65,7 +65,7 @@ export async function getServerSideProps(context) {
     const songs = await db
         .collection("songs")
         .find({})
-        .sort({ name: -1 })
+        .sort({ name: 1 })
         .toArray();
 
     let result = []
