@@ -3,6 +3,7 @@ import { transpose } from 'chord-transposer';
 import { useRouter } from 'next/router'
 import { MongoClient } from 'mongodb'
 import Navbar from "../../components/Navbar.js"
+import * as Icon from 'react-feather';
 
 // Client
 export default function Song(props) {
@@ -15,6 +16,7 @@ export default function Song(props) {
   const [name, setName] = useState(song.name);
   const [editMode, setEditMode] = useState(false);
   const [spinner, setSpinner] = useState(false);
+  const [scrolling, setScrolling] = useState(false);
 
   useEffect(() => {
     console.log('useEffect');
@@ -70,6 +72,21 @@ export default function Song(props) {
     setSpinner(false)
   }
 
+  const startScroll = () => {
+    setScrolling(true)
+    const timerId = setInterval(() => {
+      console.log('scrolling');
+      window.scrollTo(0, document.documentElement.scrollTop + 10);
+    }, 1000);
+    localStorage.setItem('timerId', timerId)
+  }
+
+  const stopScroll = () => {
+    const timerId = localStorage.getItem('timerId')
+    clearInterval(timerId)
+    setScrolling(false)
+  }
+
   return (
     <div className="bg-black text-white p-3">
       <Navbar />
@@ -87,20 +104,29 @@ export default function Song(props) {
       <div className='row mb-3'>
         <div className='col'>
           <div className='btn-group'>
-            <button className='btn btn-outline-light' onClick={transposeUp}>+</button>
-            <button className='btn btn-outline-light' onClick={transposeDown}>-</button>
+            <button className='btn btn-outline-light' onClick={transposeUp}><Icon.Plus /></button>
+
+            <button className='btn btn-outline-light' onClick={transposeDown}><Icon.Minus /></button>
+
+            <button className='btn btn-outline-light'
+              onClick={startScroll}
+              style={{ display: (scrolling) ? "none" : "" }}><Icon.PlayCircle /></button>
+
+            <button className='btn btn-outline-warning'
+              onClick={stopScroll}
+              style={{ display: (scrolling) ? "" : "none" }}><Icon.StopCircle /></button>
+
+            <button className='btn btn-outline-warning'
+              onClick={save}
+              style={{ display: (editMode) ? "" : "none" }}
+            >Save</button>
+
+            <button
+              className='btn btn-outline-light'
+              onClick={edit}
+              style={{ display: (editMode) ? "none" : "" }}
+            ><Icon.Edit /></button>
           </div>
-        </div>
-        <div className='col'>
-          <button
-            className='btn btn-outline-light'
-            onClick={edit}
-            style={{ display: (editMode) ? "none" : "" }}
-          >Edit</button>
-          <button className='btn btn-outline-warning'
-            onClick={save}
-            style={{ display: (editMode) ? "" : "none" }}
-          >Save</button>
         </div>
         <div className='col'>
           <div
