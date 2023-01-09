@@ -39,7 +39,7 @@ export default function Navbar(props) {
                 <div className='col-3' style={{ display: (spinner) ? "none" : "" }}>
                     <Link
                         href="/"
-                        className="text-white no-underline">Chords
+                        className="text-white no-underline">{props.logo}
                     </Link>
                 </div>
 

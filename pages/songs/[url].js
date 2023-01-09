@@ -91,7 +91,7 @@ export default function Song(props) {
 
   return (
     <div className="bg-black">
-      <Navbar />
+      <Navbar logo='Home' />
 
       <div className="m-3">
         {/* Header */}
