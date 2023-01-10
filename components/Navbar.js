@@ -8,15 +8,20 @@ import AsyncSelect from 'react-select/async';
 export default function Navbar(props) {
     const router = useRouter();
     const [spinner, setSpinner] = useState(false);
+    const [filterTimeoutState, setfilterTimeoutState] = useState('')
+
 
     let defaultOptions = []
 
-    const loadOptions = async (inputValue) => {
-        console.log('loadOptions');
-
-        let response = await fetch('/api/getSongs?name=' + inputValue)
-        let result = await response.json()
-        return result.songs
+    const loadOptions = (inputValue, callback) => {
+        // setTimeout for debounce
+        clearTimeout(filterTimeoutState)
+        setfilterTimeoutState(setTimeout(() => {
+            console.log('loadOptions');
+            fetch('/api/getSongs?name=' + inputValue)
+                .then((res) => res.json())
+                .then((resJson) => callback(resJson.songs))
+        }, 500))
     }
 
     const start = () => {
@@ -59,7 +64,7 @@ export default function Navbar(props) {
                         components={{ DropdownIndicator: () => null, IndicatorSeparator: () => null }}
                         onChange={(selectedValue) => {
                             console.log('onChange');
-                            router.push('/songs/'+selectedValue.value)
+                            router.push('/songs/' + selectedValue.value)
                         }}
                     />
                 </div>

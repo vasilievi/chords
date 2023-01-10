@@ -2,12 +2,13 @@ export default function Footer(props) {
 
     return (
         <div className="bg-black text-light">
+            <hr></hr>
             <div className="row m-3">
                 <div className='col'>
                 </div>
 
                 <div className='col'>
-                    v. 23.01.08
+                    <small>v. 230110</small>
                 </div>
 
                 <div className='col'>
