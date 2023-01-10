@@ -25,16 +25,18 @@ function homePage(props) {
                                     spinner-id={"spinner-" + index}
                                     onClick={(e) => {
                                         console.log(e.target);
+                                        e.target.style = "display:none"
                                         const spinner = document.getElementById(e.target.attributes['spinner-id'].value)
-                                        spinner.style.display=''
-                                    }}>{song.name}</Link>
-                            </div>
-                            <div className="col-3">
+                                        spinner.style.display = ''
+                                    }}>
+                                    {song.name}
+                                </Link>
+
                                 <div
                                     id={"spinner-" + index}
                                     className="spinner-grow text-light"
                                     role="status"
-                                    style={{"display": "none"}}>
+                                    style={{ "display": "none" }}>
                                     <span className="visually-hidden">Loading...</span>
                                 </div>
                             </div>
