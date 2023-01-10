@@ -24,7 +24,6 @@ function homePage(props) {
                                     href={"/songs/" + song.url}
                                     spinner-id={"spinner-" + index}
                                     onClick={(e) => {
-                                        console.log(e.target);
                                         e.target.style = "display:none"
                                         const spinner = document.getElementById(e.target.attributes['spinner-id'].value)
                                         spinner.style.display = ''

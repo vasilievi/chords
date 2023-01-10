@@ -10,12 +10,10 @@ import * as Icon from 'react-feather';
 export default function Song(props) {
 
   const router = useRouter()
-  const { url } = router.query
   const [editMode, setEditMode] = useState(false);
   const [spinner, setSpinner] = useState(false);
   const [scrolling, setScrolling] = useState(false);
-
-  const [song, setSong] = useState({ name: '', text: '' });
+  const [song, setSong] = useState(JSON.parse(props.song));
 
   useEffect(() => {
     console.log('useEffect');
@@ -36,6 +34,10 @@ export default function Song(props) {
     setSong({ ...song, text: transpose(song.text).up(1).toString() })
   }
 
+  const transposeReset = () => {
+    setSong({ ...song, text: transpose(song.text).toKey('F').toString() })
+  }
+
   const transposeDown = () => {
     setSong({ ...song, text: transpose(song.text).down(1).toString() })
   }
@@ -54,11 +56,7 @@ export default function Song(props) {
       headers: {
         'Content-Type': 'application/json;charset=utf-8'
       },
-      body: JSON.stringify({
-        url: url,
-        name: song.name,
-        text: song.text
-      })
+      body: JSON.stringify(song)
     });
 
     if (response.status === 200) {
@@ -103,14 +101,33 @@ export default function Song(props) {
             setSong({ ...song, name: e.target.value })
           }}></textarea>
 
-        {/* Buttons */}
         <div className='row mb-3'>
-          <div className='col'>
+          <div className="col-auto">
+            <label className="col-form-label bg-black text-white">Key</label>
+          </div>
+          <div className="col-auto">
+            <input
+              size="4"
+              className="form-control bg-black text-white"
+              value={song.key}
+              onChange={(e) => {
+                setSong({ ...song, key: e.target.value })
+              }}
+            />
+          </div>
+          <div className="col-auto">
             <div className='btn-group'>
               <button className='btn btn-outline-light' onClick={transposeUp}><Icon.Plus /></button>
-
+              <button className='btn btn-outline-light' onClick={transposeReset}>Reset</button>
               <button className='btn btn-outline-light' onClick={transposeDown}><Icon.Minus /></button>
+            </div>
+          </div>
+        </div>
 
+        {/* Buttons */}
+        <div className='row mb-3'>
+          <div className='col-auto'>
+            <div className='btn-group'>
               <button className='btn btn-outline-light'
                 onClick={startScroll}
                 style={{ display: (scrolling) ? "none" : "" }}><Icon.PlayCircle /></button>
@@ -131,7 +148,7 @@ export default function Song(props) {
               ><Icon.Edit /></button>
             </div>
           </div>
-          <div className='col'>
+          <div className='col-auto'>
             <div
               style={{ display: (spinner) ? "" : "none" }}
               className="spinner-grow text-light"
@@ -179,8 +196,11 @@ export async function getServerSideProps(context) {
     .find({ url: context.params.url })
     .toArray();
 
-  let result = { name: 'not found', text: 'not found' }
-  if (songs.length > 0) result = songs[0]
+  let result = { url: context.params.url, name: 'not found', text: 'not found', key: '' }
+  if (songs.length > 0) {
+    result = songs[0]
+    delete result._id
+  }
 
   return {
     props: { 'song': JSON.stringify(result) },
