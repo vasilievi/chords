@@ -107,6 +107,7 @@ export default function Song(props) {
           </div>
           <div className="col-auto">
             <input
+              disabled={(editMode) ? false : true}
               size="4"
               className="form-control bg-black text-white"
               value={song.key}
