@@ -37,7 +37,7 @@ export default function Song(props) {
   }
 
   const transposeReset = () => {
-    setSong({ ...song, text: transpose(song.text).toKey('F').toString() })
+    setSong({ ...song, text: transpose(song.text).toKey(song.key).toString() })
   }
 
   const transposeDown = () => {

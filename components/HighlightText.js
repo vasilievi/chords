@@ -22,7 +22,7 @@ export default function HighlightText(props) {
         <pre
             style={{ display: (visible) ? "" : "none" }}
             id='pre'
-            className="form-control font-monospace form-control-lg bg-black text-white mb-3"
+            className="pre form-control font-monospace form-control-lg bg-black text-white mb-3"
             >
         </pre>
 
