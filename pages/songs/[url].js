@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { transpose } from 'chord-transposer';
+import Router from "next/router";
 import { useRouter } from 'next/router'
 import { MongoClient } from 'mongodb'
 import Navbar from "../../components/Navbar.js"
@@ -21,6 +22,10 @@ export default function Song(props) {
   useEffect(() => {
     setSong(JSON.parse(props.song))
   }, [props.song])
+
+  Router.events.on("routeChangeStart", () => {
+    stopScroll()
+  });
 
   const autoHeight = () => {
     let textarea = document.getElementById('textarea')

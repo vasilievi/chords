@@ -8,7 +8,7 @@ export default function Footer(props) {
                 </div>
 
                 <div className='col'>
-                    <small>v. 230110</small>
+                    <small>v.230111</small>
                 </div>
 
                 <div className='col'>

@@ -11,11 +11,7 @@ export default function HighlightText(props) {
 
     
   const highlightText = () => {
-    const regex = new RegExp(` [A-G] |
-                               | Am | Bm | Cm | Dm | Em | Fm | Gm 
-                               | A# | B# | C# | D# | E# | F# | G# 
-                               | Ab | Bb | Cb | Db | Eb | Fb | Gb 
-                               | A7 | B7 | C7 | D7 | E7 | F7 | G7 `, 'g');
+    const regex = new RegExp(`[ \n][A-G][ \n]|[ \n][A-G][#m67][ \n]|[ \n][A-G][#bm67][#bm67][ \n]`, 'g');
     const text = props.text
     const highlightedText = text.replace(regex, '<mark class="bg-black text-warning">$&</mark>');
     const pre = document.getElementById('pre')
