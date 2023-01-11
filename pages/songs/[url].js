@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import { MongoClient } from 'mongodb'
 import Navbar from "../../components/Navbar.js"
 import Footer from "../../components/Footer.js"
+import HighlightText from "../../components/HighlightText"
 import * as Icon from 'react-feather';
 
 // Client
@@ -13,19 +14,15 @@ export default function Song(props) {
   const [editMode, setEditMode] = useState(false);
   const [spinner, setSpinner] = useState(false);
   const [scrolling, setScrolling] = useState(false);
-  const [song, setSong] = useState(JSON.parse(props.song));
+
+  let propSong = JSON.parse(props.song)
+  const [song, setSong] = useState(propSong);
 
   useEffect(() => {
-    console.log('useEffect');
     setSong(JSON.parse(props.song))
-
-    setTimeout(() => {
-      autoHeight()
-    }, 500);
   }, [props.song])
 
   const autoHeight = () => {
-    console.log('autoHeight');
     let textarea = document.getElementById('textarea')
     textarea.setAttribute("style", "height:" + (textarea.scrollHeight) + "px;overflow-y:hidden;");
   }
@@ -44,10 +41,13 @@ export default function Song(props) {
 
   const edit = () => {
     setEditMode(true)
+
+    setTimeout(() => {
+      autoHeight()
+    }, 500);
   }
 
   const save = async (e) => {
-
     e.target.disabled = true
     setSpinner(true)
 
@@ -161,15 +161,25 @@ export default function Song(props) {
         </div>
 
         {/* Text */}
-        <textarea
-          id='textarea'
-          className="form-control font-monospace form-control-lg bg-black text-white mb-3"
-          disabled={(editMode) ? false : true}
-          value={song.text}
-          onChange={(e) => {
-            setSong({ ...song, text: e.target.value })
-            autoHeight()
-          }}></textarea>
+        <div
+          style={{ display: (editMode) ? "" : "none" }}
+        >
+          <textarea
+            id='textarea'
+            className="form-control font-monospace form-control-lg bg-black text-white mb-3"
+            disabled={(editMode) ? false : true}
+            value={song.text}
+            onChange={(e) => {
+              setSong({ ...song, text: e.target.value })
+              autoHeight()
+            }}></textarea>
+        </div>
+
+        <HighlightText
+          text={song.text}
+          visible={!editMode}
+        />
+
       </div>
 
       <Footer />
