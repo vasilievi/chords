@@ -106,6 +106,7 @@ export default function Song(props) {
             setSong({ ...song, name: e.target.value })
           }}></textarea>
 
+        {/* Buttons */}
         <div className='row mb-3'>
           <div className="col-auto">
             <label className="col-form-label bg-black text-white">Key</label>
@@ -130,7 +131,6 @@ export default function Song(props) {
           </div>
         </div>
 
-        {/* Buttons */}
         <div className='row mb-3'>
           <div className='col-auto'>
             <div className='btn-group'>

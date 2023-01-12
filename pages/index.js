@@ -12,6 +12,7 @@ function homePage(props) {
     return (
         <div className="bg-black">
             <Navbar logo="Best chords" />
+            
             <Carousel />
 
             <ul className="list-group">
