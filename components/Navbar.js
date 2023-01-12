@@ -3,6 +3,8 @@ import Router from "next/router";
 import { useRouter } from 'next/navigation'
 import { useState } from 'react';
 import AsyncSelect from 'react-select/async';
+import * as Icon from 'react-feather';
+
 
 
 export default function Navbar(props) {
@@ -68,7 +70,7 @@ export default function Navbar(props) {
                             <button id='close-canvas-button' type="button" className="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                         </div>
                         <div className="offcanvas-body">
-                            <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
+                        <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
                                 <li className="nav-item">
                                     <AsyncSelect
                                         className='text-dark'
@@ -82,13 +84,35 @@ export default function Navbar(props) {
                                         }}
                                     />
                                 </li>
-                                <li className="nav-item dropdown">
-                                    <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Login
-                                    </a>
-                                    <ul className="dropdown-menu dropdown-menu-dark">
-                                        <li><a className="dropdown-item" href="#">My playlists</a></li>
-                                    </ul>
+                                <li className="nav-item">
+                                    <Link
+                                        href="/login"
+                                        className="nav-link text-white no-underline">
+                                        <div className='row'>
+                                            <div className='col-auto'><Icon.LogIn /></div> 
+                                            <div className='col-auto'>Login</div>
+                                        </div>
+                                    </Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link
+                                        href="/logout"
+                                        className="nav-link text-white no-underline">
+                                        <div className='row'>
+                                            <div className='col-auto'><Icon.LogOut /></div> 
+                                            <div className='col-auto'>Logout</div>
+                                        </div>
+                                    </Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link
+                                        href="/playlists"
+                                        className="nav-link text-white no-underline">
+                                        <div className='row'>
+                                            <div className='col-auto'><Icon.List /></div> 
+                                            <div className='col-auto'>Playlists</div>
+                                        </div>
+                                    </Link>
                                 </li>
                             </ul>
 
