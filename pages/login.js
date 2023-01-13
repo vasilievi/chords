@@ -1,6 +1,8 @@
 import Navbar from "../components/Navbar.js"
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation'
+import Router from "next/router";
+
 
 export default function login(props) {
     const router = useRouter();
@@ -9,15 +11,19 @@ export default function login(props) {
         phonenumber: '',
         code: ''
     });
+    const [spinner, setSpinner] = useState(false);
+
 
     useEffect(() => {
-        if(user.code.length === 4) checkAuth()
-      }, [user.code])
+        if (user.code.length === 4) checkAuth()
+    }, [user.code])
 
     const [codeSent, setCodeSent] = useState(false)
 
     const auth = async () => {
         console.log('auth');
+        setSpinner(true)
+
         let res = await fetch('/api/auth', {
             method: 'POST',
             headers: {
@@ -31,23 +37,27 @@ export default function login(props) {
         if (res.status === 200) {
             setCodeSent(true)
         }
+        setSpinner(false)
+
     }
 
     const checkAuth = async () => {
         console.log('checkAuth');
-        let response = await fetch('/api/checkAuth', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8'
-            },
-            body: JSON.stringify(user)
-        });
+        localStorage.setItem('user', JSON.stringify(user))
+        setSpinner(true)
+        const common = (await import('../common.js'))
+        let authorized = await common.checkAuth()
+        setSpinner(false)
 
-        if (response.status === 200) {
-            localStorage.setItem('user', JSON.stringify(user))
+        if (authorized) {
             router.push('/')
         }
     }
+
+    Router.events.on("routeChangeStart", () => {
+        setSpinner(true)
+    });
+
 
     return (
         <div className="bg-black">
@@ -62,38 +72,53 @@ export default function login(props) {
                                         <div className="m-sm-4">
                                             <div className="text-center">
                                                 <h1 className="h2 bg-black text-white">Login</h1>
+                                                <div
+                                                    style={{ display: (spinner) ? "" : "none" }}
+                                                    className="spinner-grow text-light"
+                                                    role="status">
+                                                    <span className="visually-hidden">Loading...</span>
+                                                </div>
+
                                             </div>
                                             <form>
-                                                <div className="mb-3 row">
+                                                <div className="mb-3 row"
+                                                    style={{ display: (codeSent) ? "none" : "" }}>
                                                     <label className="form-label bg-black text-white">Phone number</label>
                                                     <div className="col-8">
                                                         <input className="form-control" type="number"
-                                                            placeholder="79876543210"
-                                                            max="79999999999"
-                                                            disabled={codeSent}
+                                                            placeholder="9876543210"
+                                                            max="9999999999"
                                                             value={user.phonenumber}
+                                                            disabled={spinner}
                                                             onChange={(e) => {
                                                                 setUser({ ...user, phonenumber: e.target.value })
+                                                            }}
+                                                            onKeyDown={(e) => {
+                                                                if (e.key === "Enter") {
+                                                                    auth();
+                                                                }
                                                             }} />
                                                     </div>
                                                     <div className="col-4">
                                                         <button type="button" className="btn btn-outline-warning"
-                                                            disabled={codeSent}
                                                             onClick={auth}
+                                                            disabled={spinner}
                                                         >Get code</button>
                                                     </div>
                                                 </div>
-                                                <div className="mb-3 row">
+                                                <div className="mb-3 row"
+                                                    style={{ display: (codeSent) ? "" : "none" }}>
                                                     <label className="form-label bg-black text-white">Code</label>
-                                                    <div className="col-8">
+                                                    <div className="col">
                                                         <input className="form-control" type="number"
                                                             placeholder="1234"
                                                             max="9999"
-                                                            disabled={!codeSent}
+                                                            disabled={spinner}
                                                             value={user.code}
                                                             onChange={(e) => {
                                                                 setUser({ ...user, code: e.target.value })
-                                                            }} />
+                                                            }}
+                                                        />
                                                     </div>
                                                 </div>
                                             </form>

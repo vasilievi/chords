@@ -44,12 +44,20 @@ export default function Song(props) {
     setSong({ ...song, text: transpose(song.text).down(1).toString() })
   }
 
-  const edit = () => {
-    setEditMode(true)
+  const edit = async () => {
+    setSpinner(true)
+    const common = (await import('../../common.js'))
+    let authorized = await common.checkAuth()
+    setSpinner(false)
 
-    setTimeout(() => {
-      autoHeight()
-    }, 500);
+    if (authorized) {
+      setEditMode(true)
+      setTimeout(() => {
+        autoHeight()
+      }, 500);
+    } else {
+      router.push('/login')
+    }
   }
 
   const save = async (e) => {

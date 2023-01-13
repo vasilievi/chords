@@ -22,7 +22,7 @@ export default async function handler(req, res) {
         code: ''
     }
 
-    let resPhoneVerify = await fetch(`https://api.nerotech.ru/api/v1/call?service_id=386&secret_key=caa325a407d2d181ed1fffa14970a053&phone=${req.body.phonenumber}`)
+    let resPhoneVerify = await fetch(`https://api.nerotech.ru/api/v1/call?service_id=386&secret_key=caa325a407d2d181ed1fffa14970a053&phone=7${req.body.phonenumber}`)
     let resPhoneVerifyJson = await resPhoneVerify.json()
     if (resPhoneVerifyJson.code) {
         updateUser.code = resPhoneVerifyJson.code

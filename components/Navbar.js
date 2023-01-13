@@ -96,21 +96,26 @@ export default function Navbar(props) {
                                 </li>
                                 <li className="nav-item">
                                     <Link
-                                        href="/logout"
-                                        className="nav-link text-white no-underline">
-                                        <div className='row'>
-                                            <div className='col-auto'><Icon.LogOut /></div> 
-                                            <div className='col-auto'>Logout</div>
-                                        </div>
-                                    </Link>
-                                </li>
-                                <li className="nav-item">
-                                    <Link
                                         href="/playlists"
                                         className="nav-link text-white no-underline">
                                         <div className='row'>
                                             <div className='col-auto'><Icon.List /></div> 
                                             <div className='col-auto'>Playlists</div>
+                                        </div>
+                                    </Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link
+                                        href="/logout"
+                                        className="nav-link text-white no-underline"
+                                        onClick={(e) => {
+                                            e.preventDefault()
+                                            localStorage.removeItem('user')
+                                            router.push('/login')
+                                        }}>
+                                        <div className='row'>
+                                            <div className='col-auto'><Icon.LogOut /></div> 
+                                            <div className='col-auto'>Logout</div>
                                         </div>
                                     </Link>
                                 </li>
