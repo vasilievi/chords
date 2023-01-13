@@ -58,7 +58,7 @@ export default function login(props) {
                                             <form>
                                                 <div className="mb-3 row">
                                                     <label className="form-label bg-black text-white">Phone number</label>
-                                                    <div className="col-auto">
+                                                    <div className="col-8">
                                                         <input className="form-control" type="number"
                                                             placeholder="9876543210"
                                                             max="9999999999"
@@ -68,7 +68,7 @@ export default function login(props) {
                                                                 setUser({ ...user, phonenumber: e.target.value })
                                                             }} />
                                                     </div>
-                                                    <div className="col-auto">
+                                                    <div className="col-4">
                                                         <button type="button" className="btn btn-outline-warning"
                                                             disabled={codeSent}
                                                             onClick={getCode}
@@ -77,7 +77,7 @@ export default function login(props) {
                                                 </div>
                                                 <div className="mb-3 row">
                                                     <label className="form-label bg-black text-white">Code</label>
-                                                    <div className="col-auto">
+                                                    <div className="col-8">
                                                         <input className="form-control" type="number"
                                                             placeholder="1234"
                                                             max="9999"
@@ -87,7 +87,7 @@ export default function login(props) {
                                                                 setUser({ ...user, code: e.target.value })
                                                             }} />
                                                     </div>
-                                                    <div className="col-auto">
+                                                    <div className="col-4">
                                                         <button type="button" className="btn btn-outline-warning"
                                                             disabled={confirmed}
                                                             onClick={confirm}>Confirm</button>
