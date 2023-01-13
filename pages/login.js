@@ -1,19 +1,24 @@
 import Navbar from "../components/Navbar.js"
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation'
 
 export default function login(props) {
+    const router = useRouter();
 
     const [user, setUser] = useState({
         phonenumber: '',
         code: ''
     });
 
-    const [codeSent, setCodeSent] = useState(false)
-    const [confirmed, setConfirmed] = useState(false)
+    useEffect(() => {
+        if(user.code.length === 4) checkAuth()
+      }, [user.code])
 
-    const getCode = async () => {
-        console.log('getCode');
-        let response = await fetch('/api/getCode', {
+    const [codeSent, setCodeSent] = useState(false)
+
+    const auth = async () => {
+        console.log('auth');
+        let res = await fetch('/api/auth', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
@@ -21,14 +26,16 @@ export default function login(props) {
             body: JSON.stringify(user)
         });
 
-        if (response.status === 200) {
+        console.log(res.status);
+
+        if (res.status === 200) {
             setCodeSent(true)
         }
     }
 
-    const confirm = async () => {
-        console.log('confirm');
-        let response = await fetch('/api/confirm', {
+    const checkAuth = async () => {
+        console.log('checkAuth');
+        let response = await fetch('/api/checkAuth', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
@@ -37,7 +44,8 @@ export default function login(props) {
         });
 
         if (response.status === 200) {
-            setConfirmed(true)
+            localStorage.setItem('user', JSON.stringify(user))
+            router.push('/')
         }
     }
 
@@ -60,8 +68,8 @@ export default function login(props) {
                                                     <label className="form-label bg-black text-white">Phone number</label>
                                                     <div className="col-8">
                                                         <input className="form-control" type="number"
-                                                            placeholder="9876543210"
-                                                            max="9999999999"
+                                                            placeholder="79876543210"
+                                                            max="79999999999"
                                                             disabled={codeSent}
                                                             value={user.phonenumber}
                                                             onChange={(e) => {
@@ -71,7 +79,7 @@ export default function login(props) {
                                                     <div className="col-4">
                                                         <button type="button" className="btn btn-outline-warning"
                                                             disabled={codeSent}
-                                                            onClick={getCode}
+                                                            onClick={auth}
                                                         >Get code</button>
                                                     </div>
                                                 </div>
@@ -81,16 +89,11 @@ export default function login(props) {
                                                         <input className="form-control" type="number"
                                                             placeholder="1234"
                                                             max="9999"
-                                                            disabled={confirmed}
+                                                            disabled={!codeSent}
                                                             value={user.code}
                                                             onChange={(e) => {
                                                                 setUser({ ...user, code: e.target.value })
                                                             }} />
-                                                    </div>
-                                                    <div className="col-4">
-                                                        <button type="button" className="btn btn-outline-warning"
-                                                            disabled={confirmed}
-                                                            onClick={confirm}>Confirm</button>
                                                     </div>
                                                 </div>
                                             </form>
