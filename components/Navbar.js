@@ -1,19 +1,21 @@
 import Link from 'next/link'
 import Router from "next/router";
 import { useRouter } from 'next/navigation'
-import { useState } from 'react';
 import AsyncSelect from 'react-select/async';
 import * as Icon from 'react-feather';
-
-
+import { useState, useEffect } from 'react';
 
 export default function Navbar(props) {
     const router = useRouter();
     const [spinner, setSpinner] = useState(false);
     const [filterTimeoutState, setfilterTimeoutState] = useState('')
+    const [authorized, setauthorized] = useState(false)
 
-
-    let defaultOptions = []
+    useEffect(() => {
+        import('../common.js')
+            .then((common) => common.checkAuth())
+            .then((res) => setauthorized(res))
+    }, [])
 
     const loadOptions = (inputValue, callback) => {
         // setTimeout for debounce
@@ -70,11 +72,11 @@ export default function Navbar(props) {
                             <button id='close-canvas-button' type="button" className="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                         </div>
                         <div className="offcanvas-body">
-                        <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
+                            <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
                                 <li className="nav-item">
                                     <AsyncSelect
                                         className='text-dark'
-                                        defaultOptions={defaultOptions}
+                                        defaultOptions={[]}
                                         loadOptions={loadOptions}
                                         placeholder='Search'
                                         components={{ DropdownIndicator: () => null, IndicatorSeparator: () => null }}
@@ -86,26 +88,39 @@ export default function Navbar(props) {
                                 </li>
                                 <li className="nav-item">
                                     <Link
+                                        href="/songs"
+                                        className="nav-link text-white no-underline">
+                                        <div className='row'>
+                                            <div className='col-auto'><Icon.List /></div>
+                                            <div className='col-auto'>All songs</div>
+                                        </div>
+                                    </Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link
+                                        style={{ display: (authorized) ? "none" : "" }}
                                         href="/login"
                                         className="nav-link text-white no-underline">
                                         <div className='row'>
-                                            <div className='col-auto'><Icon.LogIn /></div> 
+                                            <div className='col-auto'><Icon.LogIn /></div>
                                             <div className='col-auto'>Login</div>
                                         </div>
                                     </Link>
                                 </li>
                                 <li className="nav-item">
                                     <Link
+                                        style={{ display: (authorized) ? "" : "none" }}
                                         href="/playlists"
                                         className="nav-link text-white no-underline">
                                         <div className='row'>
-                                            <div className='col-auto'><Icon.List /></div> 
-                                            <div className='col-auto'>Playlists</div>
+                                            <div className='col-auto'><Icon.List /></div>
+                                            <div className='col-auto text-warning'>My playlists</div>
                                         </div>
                                     </Link>
                                 </li>
                                 <li className="nav-item">
                                     <Link
+                                        style={{ display: (authorized) ? "" : "none" }}
                                         href="/logout"
                                         className="nav-link text-white no-underline"
                                         onClick={(e) => {
@@ -114,8 +129,8 @@ export default function Navbar(props) {
                                             router.push('/login')
                                         }}>
                                         <div className='row'>
-                                            <div className='col-auto'><Icon.LogOut /></div> 
-                                            <div className='col-auto'>Logout</div>
+                                            <div className='col-auto'><Icon.LogOut /></div>
+                                            <div className='col-auto text-warning'>Logout</div>
                                         </div>
                                     </Link>
                                 </li>
