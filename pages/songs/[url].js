@@ -11,7 +11,7 @@ import classNames from "classnames";
 
 
 // Client
-export default function Song(props) {
+export default function song(props) {
 
   const router = useRouter()
   const [editMode, setEditMode] = useState(false);

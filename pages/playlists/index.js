@@ -5,18 +5,18 @@ import { MongoClient } from 'mongodb'
 import { useRouter } from 'next/router'
 
 
-export default function songs(props) {
-    const songs = JSON.parse(props.songs)
+export default function playlists(props) {
+    const playlists = JSON.parse(props.playlists)
     const router = useRouter()
 
-    const onSelectSong = (e) => {
-        router.push('/songs/' + e.target.attributes['value'].value)
+    const onSelectPlaylist = (e) => {
+        router.push('/playlists/' + e.target.attributes['value'].value)
     }
 
     return (
         <div className="bg-black vh-100">
-            <Navbar logo="Home" />
-            <List name='All songs' list={songs} onSelect={onSelectSong} />
+            <Navbar logo="Best chords" />
+            <List name='Playlists' list={playlists} onSelect={onSelectPlaylist} />
             <Footer />
         </div>
     )
@@ -37,20 +37,20 @@ export async function getServerSideProps(context) {
 
     const db = clientPromise.db("chords");
 
-    const songs = await db
-        .collection("songs")
+    const playlists = await db
+        .collection("playlists")
         .find({})
         .sort({ name: 1 })
         .toArray();
 
     let result = []
-    if (songs.length > 0) {
-        for (const song of songs) {
-            result.push({ label: song.name, value: song.url })
+    if (playlists.length > 0) {
+        for (const playlist of playlists) {
+            result.push({ label: playlist.name, value: playlist._id })
         }
     }
 
     return {
-        props: { 'songs': JSON.stringify(result) },
+        props: { 'playlists': JSON.stringify(result) },
     }
 }

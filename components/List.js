@@ -12,7 +12,7 @@ export default function List(props) {
                             className="text-white cursor-pointer"
                             value={item.value}
                             onClick={(e) => {
-                                props.onSelectSong(e)
+                                props.onSelect(e)
                             }}>
                             {item.label}
                         </div>
