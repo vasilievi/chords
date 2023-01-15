@@ -6,26 +6,32 @@ import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react';
 
 
+
 export default function songs(props) {
     const [songs, setSongs] = useState(JSON.parse(props.songs));
     const router = useRouter()
 
     const onSelectSong = (e) => {
         console.log('onSelectSong');
-        const value = e.target.attributes['value'].value
-        let newSongs = [ ...songs ]
-        for (const song of newSongs) {
-            song.selected = false
-            if(song.value === value) song.selected = true          
-        }
+        const arrindex = e.target.attributes['arrindex'].value
+        let newSongs = [...songs]
+        newSongs[arrindex].selected = true
         setSongs(newSongs)
-        router.push('/songs/' + value)
+    }
+
+    const onCreateSongItem = (e) => {
+        console.log('onCreateSongItem');
+        router.push('/songs/new')
     }
 
     return (
         <div className="bg-black vh-100">
             <Navbar logo="Home" />
-            <List name='All songs' list={songs} onSelect={onSelectSong} />
+            <List
+                name='All songs'
+                list={songs}
+                onSelect={onSelectSong}
+                onCreateItem={onCreateSongItem}/>
             <Footer />
         </div>
     )

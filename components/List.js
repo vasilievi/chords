@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import * as Icon from 'react-feather';
+import Link from 'next/link'
 
 
 export default function List(props) {
@@ -16,17 +17,7 @@ export default function List(props) {
                             onClick={(e) => {
                                 props.onCreateItem(e)
                             }}
-                        ><Icon.Edit /></button>
-                        <button className='btn btn-outline-light'
-                            onClick={(e) => {
-                                props.onEditItem(e)
-                            }}
-                        ><Icon.Trash2 /></button>
-                        <button className='btn btn-outline-light'
-                            onClick={(e) => {
-                                props.onDeleteItem(e)
-                            }}
-                        ><Icon.PlusSquare /></button>
+                        ><Icon.Plus /></button>
                     </div>
                 </div>
             </div>
@@ -34,17 +25,18 @@ export default function List(props) {
                 {list.map((item, index) => (
                     <div key={index}
                         className={classNames("list-group-item", "bg-black")}>
-                        <div
+                        <Link
                             className={classNames("cursor-pointer", {
                                 'text-white': !item.selected,
                                 'text-warning': item.selected,
                             })}
-                            value={item.value}
+                            href={'/songs/' + item.value}
+                            arrindex={index}
                             onClick={(e) => {
                                 props.onSelect(e)
                             }}>
                             {item.label}
-                        </div>
+                        </Link>
                     </div>
                 ))}
             </div>

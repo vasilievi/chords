@@ -1,4 +1,4 @@
-import { MongoClient } from 'mongodb'
+import { ObjectId, MongoClient } from 'mongodb'
 
 export default async function handler(req, res) {
     if (req.method === 'POST') {
@@ -13,13 +13,15 @@ export default async function handler(req, res) {
         const clientPromise = await client.connect()
 
         const db = clientPromise.db("chords");
+        // let changedSong = {...req.body}
+        const id = req.body._id
+        delete req.body._id
 
         await db
             .collection("songs")
-            .findOneAndUpdate({ url: req.body.url }, {$set: req.body}, { upsert: true })
+            .findOneAndUpdate({ _id: ObjectId(id) }, {$set: req.body}, { upsert: true })
 
         res.status(200).json({ message: 'Stored successfully' })
-
 
     } else {
         res.status(500).json({ message: 'Use post request!' })

@@ -29,6 +29,26 @@ export default function song(props) {
     stopScroll()
   });
 
+  var a = {
+    "Ё": "yo", "Й": "i", "Ц": "ts", "У": "u", "К": "k", "Е": "e",
+    "Н": "n", "Г": "g", "Ш": "sh", "Щ": "sh", "З": "z", "Х": "h",
+    "Ъ": "'", "ё": "yo", "й": "i", "ц": "ts", "у": "u", "к": "k",
+    "е": "e", "н": "n", "г": "g", "ш": "sh", "щ": "sch", "з": "z",
+    "х": "h", "ъ": "'", "Ф": "f", "Ы": "i", "В": "v", "А": "a", "П": "p",
+    "Р": "r", "О": "o", "Л": "l", "Д": "d", "Ж": "zh", "Э": "e",
+    "ф": "f", "ы": "i", "в": "v", "а": "a", "п": "p", "р": "r", "о": "o",
+    "л": "l", "д": "d", "ж": "zh", "э": "e", "Я": "ya", "Ч": "ch",
+    "С": "s", "М": "m", "И": "i", "Т": "t", "Ь": "/", "Б": "B", "Ю": "YU",
+    "я": "ya", "ч": "ch", "с": "s", "м": "m", "и": "i", "т": "t", "ь": "'",
+    "б": "b", "ю": "yu", " ": "-"
+  };
+
+  function transliterate(word) {
+    return word.split('').map(function (char) {
+      return a[char] || char;
+    }).join("");
+  }
+
   const autoHeight = () => {
     let textarea = document.getElementById('textarea')
     textarea.setAttribute("style", "height:" + (textarea.scrollHeight) + "px;overflow-y:hidden;");
@@ -63,6 +83,7 @@ export default function song(props) {
   }
 
   const save = async (e) => {
+    console.log('save');
     e.target.disabled = true
     setSpinner(true)
 
@@ -85,6 +106,8 @@ export default function song(props) {
 
     e.target.disabled = false
     setSpinner(false)
+
+    if(!song._id) router.push('/songs/' + song.url)
   }
 
   const startScroll = () => {
@@ -113,7 +136,13 @@ export default function song(props) {
           disabled={(editMode) ? false : true}
           value={song.name}
           onChange={(e) => {
-            setSong({ ...song, name: e.target.value })
+            let translit = transliterate(e.target.value).toLowerCase();
+            console.log(translit);
+            setSong({
+              ...song,
+              name: e.target.value,
+              url: translit
+            })
           }}></textarea>
 
         {/* Buttons */}
@@ -224,10 +253,10 @@ export async function getServerSideProps(context) {
     .find({ url: context.params.url })
     .toArray();
 
-  let result = { url: context.params.url, name: 'not found', text: 'not found', key: '' }
+  let result = { url: context.params.url, name: 'new', text: 'new', key: 'C' }
   if (songs.length > 0) {
     result = songs[0]
-    delete result._id
+    // delete result._id
   }
 
   return {
