@@ -14,7 +14,7 @@ function songs(props) {
     }
 
     return (
-        <div className="bg-black">
+        <div className="bg-black vh-100">
             <Navbar logo="Best chords" />
             <List name='All songs' list={songs} onSelectSong={onSelectSong} />
             <Footer />
