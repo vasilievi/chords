@@ -3,14 +3,23 @@ import Footer from "../../components/Footer.js"
 import List from "../../components/List.js"
 import { MongoClient } from 'mongodb'
 import { useRouter } from 'next/router'
+import { useState, useEffect } from 'react';
 
 
 export default function songs(props) {
-    const songs = JSON.parse(props.songs)
+    const [songs, setSongs] = useState(JSON.parse(props.songs));
     const router = useRouter()
 
     const onSelectSong = (e) => {
-        router.push('/songs/' + e.target.attributes['value'].value)
+        console.log('onSelectSong');
+        const value = e.target.attributes['value'].value
+        let newSongs = [ ...songs ]
+        for (const song of newSongs) {
+            song.selected = false
+            if(song.value === value) song.selected = true          
+        }
+        setSongs(newSongs)
+        router.push('/songs/' + value)
     }
 
     return (
@@ -46,7 +55,11 @@ export async function getServerSideProps(context) {
     let result = []
     if (songs.length > 0) {
         for (const song of songs) {
-            result.push({ label: song.name, value: song.url })
+            result.push({
+                label: song.name,
+                value: song.url,
+                selected: false
+            })
         }
     }
 

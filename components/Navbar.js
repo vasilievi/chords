@@ -123,7 +123,7 @@ export default function Navbar(props) {
                                 <li className="nav-item">
                                     <Link
                                         href="/logout"
-                                        className={classNames('nav-link', 'text-white', { 'd-none': authorized })}
+                                        className={classNames('nav-link', 'text-white', { 'd-none': !authorized })}
                                         onClick={(e) => {
                                             e.preventDefault()
                                             localStorage.removeItem('user')

@@ -4,7 +4,6 @@ import List from "../../components/List.js"
 import { MongoClient } from 'mongodb'
 import { useRouter } from 'next/router'
 
-
 export default function playlists(props) {
     const playlists = JSON.parse(props.playlists)
     const router = useRouter()
@@ -13,12 +12,31 @@ export default function playlists(props) {
         router.push('/playlists/' + e.target.attributes['value'].value)
     }
 
+    const onCreatePlaylist = () => {
+        console.log('onCreatePlaylist');
+    }
+
+    const onEditPlaylist = () => {
+        console.log('onEditPlaylist');
+    }
+
+    const onDeletePlaylist = () => {
+        console.log('onDeletePlaylist');
+    }
+
     return (
         <div className="bg-black vh-100">
             <Navbar logo="Best chords" />
-            <List name='Playlists' list={playlists} onSelect={onSelectPlaylist} />
+            <List
+                name='Playlists'
+                list={playlists}
+                onSelect={onSelectPlaylist} 
+                onCreateItem={onCreatePlaylist}
+                onEditItem={onEditPlaylist}
+                onDeleteItem={onDeletePlaylist}
+                />
             <Footer />
-        </div>
+        </div >
     )
 }
 
