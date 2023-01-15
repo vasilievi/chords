@@ -7,6 +7,8 @@ import Navbar from "../../components/Navbar.js"
 import Footer from "../../components/Footer.js"
 import HighlightText from "../../components/HighlightText"
 import * as Icon from 'react-feather';
+import classNames from "classnames";
+
 
 // Client
 export default function Song(props) {
@@ -142,30 +144,28 @@ export default function Song(props) {
         <div className='row mb-3'>
           <div className='col-auto'>
             <div className='btn-group'>
-              <button className='btn btn-outline-light'
-                onClick={startScroll}
-                style={{ display: (scrolling) ? "none" : "" }}><Icon.PlayCircle /></button>
+              <button
+                className={classNames('btn', 'btn-outline-light', { 'd-none': scrolling })}
+                onClick={startScroll}><Icon.PlayCircle /></button>
 
-              <button className='btn btn-outline-warning'
-                onClick={stopScroll}
-                style={{ display: (scrolling) ? "" : "none" }}><Icon.StopCircle /></button>
+              <button
+                className={classNames('btn', 'btn-outline-warning', { 'd-none': !scrolling })}
+                onClick={stopScroll}><Icon.StopCircle /></button>
 
-              <button className='btn btn-outline-warning'
+              <button
+                className={classNames('btn', 'btn-outline-warning', { 'd-none': !editMode })}
                 onClick={save}
-                style={{ display: (editMode) ? "" : "none" }}
               >Save</button>
 
               <button
-                className='btn btn-outline-light'
+                className={classNames('btn', 'btn-outline-light', { 'd-none': editMode })}
                 onClick={edit}
-                style={{ display: (editMode) ? "none" : "" }}
               ><Icon.Edit /></button>
             </div>
           </div>
           <div className='col-auto'>
             <div
-              style={{ display: (spinner) ? "" : "none" }}
-              className="spinner-grow text-light"
+              className={classNames("spinner-grow", "text-light", { 'd-none': !spinner })}
               role="status">
               <span className="visually-hidden">Loading...</span>
             </div>
@@ -173,9 +173,9 @@ export default function Song(props) {
           </div>
         </div>
 
-        {/* Text */}
+        {/* Text Edit */}
         <div
-          style={{ display: (editMode) ? "" : "none" }}
+          className={classNames({ 'd-none': !editMode })}
         >
           <textarea
             id='textarea'
@@ -188,10 +188,14 @@ export default function Song(props) {
             }}></textarea>
         </div>
 
-        <HighlightText
-          text={song.text}
-          visible={!editMode}
-        />
+        {/* Text View */}
+        <div
+          className={classNames({ 'd-none': editMode })}
+        >
+          <HighlightText
+            text={song.text}
+          />
+        </div>
 
       </div>
 

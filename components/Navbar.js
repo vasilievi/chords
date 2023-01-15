@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation'
 import AsyncSelect from 'react-select/async';
 import * as Icon from 'react-feather';
 import { useState, useEffect } from 'react';
+import classNames from "classnames";
 
 export default function Navbar(props) {
     const router = useRouter();
@@ -29,7 +30,6 @@ export default function Navbar(props) {
     }
 
     const start = () => {
-        console.log("start");
         setSpinner(true)
 
         const closeCanvasButton = document.getElementById('close-canvas-button')
@@ -37,7 +37,6 @@ export default function Navbar(props) {
     };
 
     const end = () => {
-        console.log("finished");
         setSpinner(false)
     };
 
@@ -50,9 +49,9 @@ export default function Navbar(props) {
             <nav className="navbar navbar-dark bg-dark fixed-top">
                 <div className="container-fluid">
                     <Link
-                        style={{ display: (spinner) ? "none" : "" }}
                         href="/"
-                        className="text-white no-underline">{props.logo}
+                        className={classNames('text-white', 'no-underline', { 'd-none': spinner })}
+                    >{props.logo}
                     </Link>
 
                     <div
@@ -75,6 +74,8 @@ export default function Navbar(props) {
                             <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
                                 <li className="nav-item">
                                     <AsyncSelect
+                                        id="long-value-select"
+                                        instanceId="long-value-select"
                                         className='text-dark'
                                         defaultOptions={[]}
                                         loadOptions={loadOptions}
@@ -89,18 +90,19 @@ export default function Navbar(props) {
                                 <li className="nav-item">
                                     <Link
                                         href="/songs"
-                                        className="nav-link text-white no-underline">
+                                        className="nav-link text-white no-underline"
+                                    >
                                         <div className='row'>
-                                            <div className='col-auto'><Icon.List /></div>
+                                            <div className='col-auto'><Icon.Music /></div>
                                             <div className='col-auto'>All songs</div>
                                         </div>
                                     </Link>
                                 </li>
                                 <li className="nav-item">
                                     <Link
-                                        style={{ display: (authorized) ? "none" : "" }}
+                                        // style={{ display: (authorized) ? "none" : "" }}
                                         href="/login"
-                                        className="nav-link text-white no-underline">
+                                        className={classNames('nav-link', 'text-white', { 'd-none': authorized })}>
                                         <div className='row'>
                                             <div className='col-auto'><Icon.LogIn /></div>
                                             <div className='col-auto'>Login</div>
@@ -109,20 +111,19 @@ export default function Navbar(props) {
                                 </li>
                                 <li className="nav-item">
                                     <Link
-                                        style={{ display: (authorized) ? "" : "none" }}
                                         href="/playlists"
-                                        className="nav-link text-white no-underline">
+                                        className={classNames('nav-link', 'text-white', { 'd-none': !authorized })}
+                                    >
                                         <div className='row'>
                                             <div className='col-auto'><Icon.List /></div>
-                                            <div className='col-auto text-warning'>My playlists</div>
+                                            <div className='col-auto'>My playlists</div>
                                         </div>
                                     </Link>
                                 </li>
                                 <li className="nav-item">
                                     <Link
-                                        style={{ display: (authorized) ? "" : "none" }}
                                         href="/logout"
-                                        className="nav-link text-white no-underline"
+                                        className={classNames('nav-link', 'text-white', { 'd-none': authorized })}
                                         onClick={(e) => {
                                             e.preventDefault()
                                             localStorage.removeItem('user')
@@ -130,7 +131,7 @@ export default function Navbar(props) {
                                         }}>
                                         <div className='row'>
                                             <div className='col-auto'><Icon.LogOut /></div>
-                                            <div className='col-auto text-warning'>Logout</div>
+                                            <div className='col-auto'>Logout</div>
                                         </div>
                                     </Link>
                                 </li>
@@ -139,9 +140,9 @@ export default function Navbar(props) {
                         </div>
                     </div>
                 </div>
-            </nav>
+            </nav >
             <div style={{ "height": "60px" }}></div>
-        </div>
+        </div >
 
 
     )

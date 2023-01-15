@@ -1,16 +1,22 @@
 import Navbar from "../../components/Navbar.js"
 import Footer from "../../components/Footer.js"
-import Chords from "../../components/Chords.js"
+import List from "../../components/List.js"
 import { MongoClient } from 'mongodb'
+import { useRouter } from 'next/router'
+
 
 function songs(props) {
-
     const songs = JSON.parse(props.songs)
+    const router = useRouter()
+
+    const onSelectSong = (e) => {
+        router.push('/songs/' + e.target.attributes['value'].value)
+    }
 
     return (
         <div className="bg-black">
             <Navbar logo="Best chords" />
-            <Chords songs={songs} />
+            <List name='All songs' list={songs} onSelectSong={onSelectSong} />
             <Footer />
         </div>
     )
@@ -40,9 +46,13 @@ export async function getServerSideProps(context) {
         .toArray();
 
     let result = []
-    if (songs.length > 0) result = songs
+    if (songs.length > 0) {
+        for (const song of songs) {
+            result.push({ label: song.name, value: song.url })
+        }
+    }
 
     return {
-        props: { 'songs': JSON.stringify(songs) },
+        props: { 'songs': JSON.stringify(result) },
     }
 }

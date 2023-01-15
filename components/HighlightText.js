@@ -2,12 +2,9 @@ import { useState, useEffect } from 'react';
 
 export default function HighlightText(props) {
 
-    const [visible, setVisible] = useState(props.visible);
-
     useEffect(() => {
         highlightText()
-        setVisible(props.visible)
-    }, [props.text, props.visible])
+    }, [props.text])
 
     
   const highlightText = () => {
@@ -20,7 +17,6 @@ export default function HighlightText(props) {
 
     return (
         <pre
-            style={{ display: (visible) ? "" : "none" }}
             id='pre'
             className="pre form-control font-monospace form-control-lg bg-black text-white mb-3"
             >
