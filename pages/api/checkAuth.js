@@ -17,16 +17,21 @@ export default async function handler(req, res) {
 
     const db = clientPromise.db("chords");
 
-    const users = await db
+    let user = await db
         .collection("users")
-        .find({ phonenumber: req.body.phonenumber })
-        .toArray();
+        .findOne({
+            phonenumber: req.body.phonenumber,
+            code: req.body.code
+        })
 
-    let result = false
-    if (users.length > 0) {
-        if (users[0].code === req.body.code) result = true
+    if (!user) {
+        user = await db
+            .collection("users")
+            .findOne({
+                token: req.body.token
+            })
     }
 
-    if(result) res.status(200).json({ message: 'Ok'})
-    if(!result) res.status(401).json({ message: 'Auth failed'})
+    if (user) res.status(200).json({ message: 'Ok', user: user })
+    if (!user) res.status(401).json({ message: 'Auth failed' })
 }

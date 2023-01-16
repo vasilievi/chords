@@ -17,10 +17,17 @@ export default async function handler(req, res) {
 
     const db = clientPromise.db("chords");
 
+    const user = await db
+        .collection("users")
+        .findOne({ phonenumber: req.body.phonenumber })
+
+    let token = generateToken(32)
+    if (user) token = user.token
+
     let updateUser = {
         phonenumber: req.body.phonenumber,
         code: '',
-        token: generateToken(32)
+        token: token
     }
 
     let resPhoneVerify = await fetch(`https://api.nerotech.ru/api/v1/call?service_id=386&secret_key=caa325a407d2d181ed1fffa14970a053&phone=7${req.body.phonenumber}`)

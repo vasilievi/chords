@@ -1,5 +1,6 @@
 export const checkAuth = async () => {
-    let res = await fetch('/api/checkAuth', {
+    console.log('checkAuth');
+    const res = await fetch('/api/checkAuth', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json;charset=utf-8'
@@ -7,6 +8,13 @@ export const checkAuth = async () => {
         body: localStorage.getItem('user')
     });
 
-    return(res.status === 200)
+    let result = false
+    if (res.status === 200) {
+        result = true
+        const resJson = await res.json()
+        localStorage.setItem('user', JSON.stringify(resJson.user))
+    }
+
+    return (result)
 
 }
