@@ -19,7 +19,8 @@ export default async function handler(req, res) {
 
     let updateUser = {
         phonenumber: req.body.phonenumber,
-        code: ''
+        code: '',
+        token: generateToken(32)
     }
 
     let resPhoneVerify = await fetch(`https://api.nerotech.ru/api/v1/call?service_id=386&secret_key=caa325a407d2d181ed1fffa14970a053&phone=7${req.body.phonenumber}`)
@@ -33,5 +34,14 @@ export default async function handler(req, res) {
         .findOneAndUpdate({ phonenumber: updateUser.phonenumber }, { $set: updateUser }, { upsert: true })
 
     res.status(200).json({ message: 'New code for ' + req.body.phonenumber + ' generated' })
+}
+
+function generateToken(length) {
+    const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+    let result = "";
+    for (var i = 0, n = charset.length; i < length; ++i) {
+        result += charset.charAt(Math.floor(Math.random() * n));
+    }
+    return result;
 }
 
