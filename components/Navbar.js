@@ -11,8 +11,11 @@ export default function Navbar(props) {
     const [spinner, setSpinner] = useState(false);
     const [filterTimeoutState, setfilterTimeoutState] = useState('')
     const [authorized, setauthorized] = useState(false)
+    const [phonenumber, setPhonenumber] = useState('')
 
     useEffect(() => {
+        const user = JSON.parse(localStorage.getItem('user'))
+        if(user) setPhonenumber(user.phonenumber)
         import('../common.js')
             .then((common) => common.checkAuth())
             .then((res) => setauthorized(res))
@@ -55,8 +58,7 @@ export default function Navbar(props) {
                     </Link>
 
                     <div
-                        style={{ display: (spinner) ? "" : "none" }}
-                        className="spinner-grow text-light"
+                        className={classNames('spinner-grow', 'text-light', { 'd-none': !spinner })}
                         role="status">
                         <span className="visually-hidden">Loading...</span>
                     </div>
@@ -72,6 +74,9 @@ export default function Navbar(props) {
                         </div>
                         <div className="offcanvas-body">
                             <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
+                                <li className="nav-item">
+                                    <div className='m-3 h6 text-center text-warning'>{phonenumber}</div>
+                                </li>
                                 <li className="nav-item">
                                     <AsyncSelect
                                         id="long-value-select"
@@ -100,7 +105,6 @@ export default function Navbar(props) {
                                 </li>
                                 <li className="nav-item">
                                     <Link
-                                        // style={{ display: (authorized) ? "none" : "" }}
                                         href="/login"
                                         className={classNames('nav-link', 'text-white', { 'd-none': authorized })}>
                                         <div className='row'>

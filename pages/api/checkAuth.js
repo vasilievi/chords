@@ -20,15 +20,15 @@ export default async function handler(req, res) {
     let user = await db
         .collection("users")
         .findOne({
-            phonenumber: req.body.phonenumber,
-            code: req.body.code
+            token: req.body.token
         })
 
     if (!user) {
         user = await db
             .collection("users")
             .findOne({
-                token: req.body.token
+                phonenumber: req.body.phonenumber,
+                code: req.body.code
             })
     }
 

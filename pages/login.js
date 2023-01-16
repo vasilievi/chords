@@ -2,7 +2,7 @@ import Navbar from "../components/Navbar.js"
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation'
 import Router from "next/router";
-
+import classNames from "classnames";
 
 export default function login(props) {
     const router = useRouter();
@@ -73,16 +73,15 @@ export default function login(props) {
                                             <div className="text-center">
                                                 <h1 className="h2 bg-black text-white">Login</h1>
                                                 <div
-                                                    style={{ display: (spinner) ? "" : "none" }}
-                                                    className="spinner-grow text-light"
+                                                    className={classNames('spinner-grow', 'text-light', { 'd-none': !spinner })}
                                                     role="status">
                                                     <span className="visually-hidden">Loading...</span>
                                                 </div>
 
                                             </div>
                                             <form>
-                                                <div className="mb-3 row"
-                                                    style={{ display: (codeSent) ? "none" : "" }}>
+                                                <div
+                                                    className={classNames('mb-3', 'row', { 'd-none': codeSent })}>
                                                     <label className="form-label bg-black text-white">Phone number</label>
                                                     <div className="col-8">
                                                         <input className="form-control" type="number"
@@ -106,8 +105,8 @@ export default function login(props) {
                                                         >Get code</button>
                                                     </div>
                                                 </div>
-                                                <div className="mb-3 row"
-                                                    style={{ display: (codeSent) ? "" : "none" }}>
+                                                <div
+                                                    className={classNames('mb-3', 'row', { 'd-none': !codeSent })}>
                                                     <label className="form-label bg-black text-white">Code</label>
                                                     <div className="col">
                                                         <input className="form-control" type="number"
