@@ -16,7 +16,7 @@ export default function Navbar(props) {
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem('user'))
         if(user) setPhonenumber(user.phonenumber)
-        import('../common.js')
+        import('../commonClient.js')
             .then((common) => common.checkAuth())
             .then((res) => setauthorized(res))
     }, [])

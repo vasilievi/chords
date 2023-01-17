@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { transpose } from 'chord-transposer';
 import Router from "next/router";
 import { useRouter } from 'next/router'
-import { MongoClient } from 'mongodb'
 import Navbar from "../../components/Navbar.js"
 import Footer from "../../components/Footer.js"
 import HighlightText from "../../components/HighlightText"
@@ -68,7 +67,7 @@ export default function song(props) {
 
   const edit = async () => {
     setSpinner(true)
-    const common = (await import('../../common.js'))
+    const common = (await import('../../commonClient.js'))
     let authorized = await common.checkAuth()
     setSpinner(false)
 
@@ -236,17 +235,10 @@ export default function song(props) {
 // Server
 export async function getServerSideProps(context) {
 
-  if (!process.env.MONGODB_URI) {
-    throw new Error('Invalid/Missing environment variable: "MONGODB_URI"')
-  }
+  const commonServer = (await import('../../commonServer.js'))
+  let mongoConnection = await commonServer.mongoConnection()
 
-  const uri = process.env.MONGODB_URI
-  const options = {}
-
-  const client = new MongoClient(uri, options)
-  const clientPromise = await client.connect()
-
-  const db = clientPromise.db("chords");
+  const db = mongoConnection.db("chords");
 
   const songs = await db
     .collection("songs")

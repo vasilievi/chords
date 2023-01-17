@@ -1,7 +1,6 @@
 import Navbar from "../../components/Navbar.js"
 import Footer from "../../components/Footer.js"
 import List from "../../components/List.js"
-import { MongoClient } from 'mongodb'
 import { useRouter } from 'next/router'
 
 export default function playlists(props) {
@@ -9,7 +8,7 @@ export default function playlists(props) {
     const router = useRouter()
 
     const onSelectPlaylist = (e) => {
-        router.push('/playlists/' + e.target.attributes['value'].value)
+        console.log('onSelectPlaylist');
     }
 
     const onCreatePlaylist = () => {
@@ -43,17 +42,10 @@ export default function playlists(props) {
 // Server
 export async function getServerSideProps(context) {
 
-    if (!process.env.MONGODB_URI) {
-        throw new Error('Invalid/Missing environment variable: "MONGODB_URI"')
-    }
+    const commonServer = (await import('../../commonServer.js'))
+    let mongoConnection = await commonServer.mongoConnection()
 
-    const uri = process.env.MONGODB_URI
-    const options = {}
-
-    const client = new MongoClient(uri, options)
-    const clientPromise = await client.connect()
-
-    const db = clientPromise.db("chords");
+    const db = mongoConnection.db("chords");
 
     const playlists = await db
         .collection("playlists")

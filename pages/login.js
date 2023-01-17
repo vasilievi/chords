@@ -45,7 +45,7 @@ export default function login(props) {
         console.log('checkAuth');
         localStorage.setItem('user', JSON.stringify(user))
         setSpinner(true)
-        const common = (await import('../common.js'))
+        const common = (await import('../commonClient.js'))
         let authorized = await common.checkAuth()
         setSpinner(false)
 

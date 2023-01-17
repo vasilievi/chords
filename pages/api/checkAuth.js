@@ -1,21 +1,13 @@
-import { MongoClient } from 'mongodb'
 
-export default async function handler(req, res) {
+export default async function checkAuth(req, res) {
     if (req.method !== 'POST') {
         res.status(500).json({ message: 'Use post request!' })
     }
 
-    if (!process.env.MONGODB_URI) {
-        throw new Error('Invalid/Missing environment variable: "MONGODB_URI"')
-    }
+    const commonServer = (await import('../../commonServer.js'))
+    let mongoConnection = await commonServer.mongoConnection()
 
-    const uri = process.env.MONGODB_URI
-    const options = {}
-
-    const client = new MongoClient(uri, options)
-    const clientPromise = await client.connect()
-
-    const db = clientPromise.db("chords");
+    const db = mongoConnection.db("chords");
 
     let user = await db
         .collection("users")

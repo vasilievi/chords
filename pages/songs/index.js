@@ -1,11 +1,8 @@
 import Navbar from "../../components/Navbar.js"
 import Footer from "../../components/Footer.js"
 import List from "../../components/List.js"
-import { MongoClient } from 'mongodb'
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react';
-
-
 
 export default function songs(props) {
     const [songs, setSongs] = useState(JSON.parse(props.songs));
@@ -40,17 +37,10 @@ export default function songs(props) {
 // Server
 export async function getServerSideProps(context) {
 
-    if (!process.env.MONGODB_URI) {
-        throw new Error('Invalid/Missing environment variable: "MONGODB_URI"')
-    }
+    const commonServer = (await import('../../commonServer.js'))
+    let mongoConnection = await commonServer.mongoConnection()
 
-    const uri = process.env.MONGODB_URI
-    const options = {}
-
-    const client = new MongoClient(uri, options)
-    const clientPromise = await client.connect()
-
-    const db = clientPromise.db("chords");
+    const db = mongoConnection.db("chords");
 
     const songs = await db
         .collection("songs")
