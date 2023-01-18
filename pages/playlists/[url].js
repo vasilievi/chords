@@ -1,11 +1,36 @@
 import { ObjectId } from 'mongodb'
+import { useState, useEffect } from 'react';
+import Navbar from "../../components/Navbar.js"
+import Footer from "../../components/Footer.js"
+import List from "../../components/List.js"
+import * as Icon from 'react-feather';
+import classNames from "classnames";
 
 export default function playlist(props) {
+    const [playlist, setPlaylist] = useState(JSON.parse(props.playlist));
+    const [editMode, setEditMode] = useState(false);
+    const [spinner, setSpinner] = useState(false);
 
-    let playlist = JSON.parse(props.playlist)
+    const onSelectSong = () => {
+
+    }
+    const onCreateSongItem = () => {
+
+    }
 
     return (
-        <h1>{playlist.name}</h1>
+        <div className="bg-black vh-100">
+            <Navbar logo='Home' />
+
+            <List
+                name={playlist.name}
+                list={playlist.songs}
+                onSelect={onSelectSong}
+                onCreateItem={onCreateSongItem}
+            />
+
+            <Footer />
+        </div>
     )
 }
 
@@ -17,14 +42,31 @@ export async function getServerSideProps(context) {
 
     const db = mongoConnection.db("chords");
 
-    playlist = await db
+    const playlist = await db
         .collection("playlists")
         .findOne({ _id: ObjectId(context.params.url) })
 
-    let result = {name: 'New'}
-    if (playlist) result = playlist
+    const songsOfPlaylist = await db
+        .collection("songs")
+        .find({ _id: { $in: playlist.songs } })
+        .sort({ name: 1 })
+        .toArray()
+
+    let result = { name: 'New', songs: [] }
+    if (playlist) {
+        result.name = playlist.name
+        result._id = playlist._id
+
+        for (const song of songsOfPlaylist) {
+            result.songs.push({
+                label: song.name,
+                value: '/songs/' + song.url,
+                selected: false
+            })
+        }
+    }
 
     return {
-        props: { 'playlist': JSON.stringify(playlist) },
+        props: { 'playlist': JSON.stringify(result) },
     }
 }

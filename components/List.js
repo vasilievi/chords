@@ -30,7 +30,7 @@ export default function List(props) {
                                 'text-white': !item.selected,
                                 'text-warning': item.selected,
                             })}
-                            href={'/songs/' + item.value}
+                            href={item.value}
                             arrindex={index}
                             onClick={(e) => {
                                 props.onSelect(e)

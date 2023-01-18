@@ -1,14 +1,17 @@
 import Navbar from "../../components/Navbar.js"
 import Footer from "../../components/Footer.js"
 import List from "../../components/List.js"
-import { useRouter } from 'next/router'
+import { useState, useEffect } from 'react';
 
 export default function playlists(props) {
-    const playlists = JSON.parse(props.playlists)
-    const router = useRouter()
+    const [playlists, setPlaylists] = useState(JSON.parse(props.playlists));
 
     const onSelectPlaylist = (e) => {
         console.log('onSelectPlaylist');
+        const arrindex = e.target.attributes['arrindex'].value
+        let newPlaylists = [...playlists]
+        newPlaylists[arrindex].selected = true
+        setPlaylists(newPlaylists)
     }
 
     const onCreatePlaylist = () => {
@@ -56,7 +59,9 @@ export async function getServerSideProps(context) {
     let result = []
     if (playlists.length > 0) {
         for (const playlist of playlists) {
-            result.push({ label: playlist.name, value: playlist._id })
+            result.push({ 
+                label: playlist.name, 
+                value: '/playlists/' +  playlist._id })
         }
     }
 

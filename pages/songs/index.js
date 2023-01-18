@@ -53,7 +53,7 @@ export async function getServerSideProps(context) {
         for (const song of songs) {
             result.push({
                 label: song.name,
-                value: song.url,
+                value: '/songs/' + song.url,
                 selected: false
             })
         }
