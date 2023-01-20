@@ -1,21 +1,17 @@
+// Server
+import dbConnect from '../../lib/dbConnect'
+import Song from '../../models/Song'
 
 export default async function handler(req, res) {
     if (req.method === 'GET') {
-        const commonServer = (await import('../../commonServer.js'))
-        let mongoConnection = await commonServer.mongoConnection()
+
+        await dbConnect()
+        const songs = await Song.find({ name: { $regex: req.query.name.toLowerCase(), $options: 'i' } })
     
-        const db = mongoConnection.db("chords");
-
-        const songs = await db
-            .collection("songs")
-            .find({ name: { $regex: req.query.name.toLowerCase(), $options: 'i' } })
-            .sort({ name: 1 })
-            .toArray();
-
         let result = []
         if (songs.length > 0) {
             for (const song of songs) {
-                result.push({ value: song.url, label: song.name })
+                result.push({ value: song.url, label: song.name, _id: song._id })
             }
         }
 

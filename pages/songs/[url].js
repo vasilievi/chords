@@ -233,22 +233,17 @@ export default function song(props) {
 }
 
 // Server
+import dbConnect from '../../lib/dbConnect'
+import Song from '../../models/Song'
+
 export async function getServerSideProps(context) {
 
-  const commonServer = (await import('../../commonServer.js'))
-  let mongoConnection = await commonServer.mongoConnection()
-
-  const db = mongoConnection.db("chords");
-
-  const songs = await db
-    .collection("songs")
-    .find({ url: context.params.url })
-    .toArray();
+  await dbConnect()
+  const song = await Song.findOne({ url: context.params.url })
 
   let result = { url: context.params.url, name: 'new', text: 'new', key: 'C' }
-  if (songs.length > 0) {
-    result = songs[0]
-    // delete result._id
+  if (song) {
+    result = song
   }
 
   return {

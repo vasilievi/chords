@@ -1,5 +1,5 @@
 import dbConnect from '../../lib/dbConnect'
-import Song from '../../models/Song'
+import Playlist from '../../models/Playlist'
 
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
@@ -7,7 +7,7 @@ export default async function handler(req, res) {
     }
 
     await dbConnect()
-    await Song.findOneAndUpdate(
+    await Playlist.findOneAndUpdate(
         req.body._id,
         req.body,
         {
@@ -16,4 +16,5 @@ export default async function handler(req, res) {
         })
 
     res.status(200).json({ message: 'Stored successfully' })
+
 }

@@ -1,15 +1,13 @@
+import dbConnect from '../../lib/dbConnect'
+import User from '../../models/User'
+
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
         res.status(500).json({ message: 'Use post request!' })
     }
 
-    const commonServer = (await import('../../commonServer.js'))
-    let mongoConnection = await commonServer.mongoConnection()
-
-    const db = mongoConnection.db("chords");
-
-    const user = await db
-        .collection("users")
+    await dbConnect()
+    let user = await User
         .findOne({ phonenumber: req.body.phonenumber })
 
     let token = generateToken(32)
@@ -27,9 +25,15 @@ export default async function handler(req, res) {
         updateUser.code = resPhoneVerifyJson.code
     }
 
-    await db
-        .collection("users")
-        .findOneAndUpdate({ phonenumber: updateUser.phonenumber }, { $set: updateUser }, { upsert: true })
+    await User.findOneAndUpdate(
+        {
+            phonenumber: updateUser.phonenumber
+        },
+        updateUser,
+        {
+            new: true,
+            upsert: true
+        })
 
     res.status(200).json({ message: 'New code for ' + req.body.phonenumber + ' generated' })
 }

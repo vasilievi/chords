@@ -14,18 +14,6 @@ export default function playlists(props) {
         setPlaylists(newPlaylists)
     }
 
-    const onCreatePlaylist = () => {
-        console.log('onCreatePlaylist');
-    }
-
-    const onEditPlaylist = () => {
-        console.log('onEditPlaylist');
-    }
-
-    const onDeletePlaylist = () => {
-        console.log('onDeletePlaylist');
-    }
-
     return (
         <div className="bg-black vh-100">
             <Navbar logo="Best chords" />
@@ -33,9 +21,6 @@ export default function playlists(props) {
                 name='Playlists'
                 list={playlists}
                 onSelect={onSelectPlaylist} 
-                onCreateItem={onCreatePlaylist}
-                onEditItem={onEditPlaylist}
-                onDeleteItem={onDeletePlaylist}
                 />
             <Footer />
         </div >
@@ -43,18 +28,13 @@ export default function playlists(props) {
 }
 
 // Server
+import dbConnect from '../../lib/dbConnect'
+import Playlist from '../../models/Playlist'
+
 export async function getServerSideProps(context) {
 
-    const commonServer = (await import('../../commonServer.js'))
-    let mongoConnection = await commonServer.mongoConnection()
-
-    const db = mongoConnection.db("chords");
-
-    const playlists = await db
-        .collection("playlists")
-        .find({})
-        .sort({ name: 1 })
-        .toArray();
+    await dbConnect()
+    const playlists = await Playlist.find()
 
     let result = []
     if (playlists.length > 0) {
