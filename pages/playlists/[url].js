@@ -8,7 +8,7 @@ import AsyncSelect from 'react-select/async';
 
 
 export default function playlist() {
-    const [playlist, setPlaylist] = useState({ name: "loading..." });
+    const [playlist, setPlaylist] = useState({ name: "new" });
     const [songs, setSongs] = useState([]);
 
     const [filterTimeoutState, setfilterTimeoutState] = useState('')
@@ -23,12 +23,13 @@ export default function playlist() {
     const getPlaylist = async () => {
         const _id = window.location.pathname.replace('/playlists/', '')
         const res = await fetch('/api/getPlaylist?_id=' + _id)
+        const resJson = await res.json()
 
         if (res.status !== 200) {
+            console.log(resJson);
             return
         }
 
-        const resJson = await res.json()
         setPlaylist(resJson.playlist)
         setSongs(resJson.songs)
     }
@@ -98,17 +99,15 @@ export default function playlist() {
 
             <div className='row m-3'>
                 <div className='col-auto'>
-                    <div className='btn-group'>
-                        <button
-                            className={classNames('btn', 'btn-outline-warning', { 'd-none': !editMode })}
-                            onClick={save}
-                        >Save</button>
+                    <button
+                        className={classNames('btn', 'btn-outline-warning', { 'd-none': !editMode })}
+                        onClick={save}
+                    >Save</button>
 
-                        <button
-                            className={classNames('btn', 'btn-outline-light', { 'd-none': editMode })}
-                            onClick={edit}
-                        ><Icon.Edit /></button>
-                    </div>
+                    <button
+                        className={classNames('btn', 'btn-outline-light', { 'd-none': editMode })}
+                        onClick={edit}
+                    ><Icon.Edit /></button>
                 </div>
                 <div className='col-auto'>
                     <div

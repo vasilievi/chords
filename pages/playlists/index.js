@@ -2,8 +2,11 @@ import Navbar from "../../components/Navbar.js"
 import Footer from "../../components/Footer.js"
 import List from "../../components/List.js"
 import { useState, useEffect } from 'react';
+import * as Icon from 'react-feather';
+import { useRouter } from 'next/router'
 
 export default function playlists(props) {
+    const router = useRouter()
     const [playlists, setPlaylists] = useState(JSON.parse(props.playlists));
 
     const onSelectPlaylist = (e) => {
@@ -17,11 +20,18 @@ export default function playlists(props) {
     return (
         <div className="bg-black vh-100">
             <Navbar logo="Best chords" />
+
+            <button type="button" className='btn btn-outline-warning m-3'
+                onClick={() => {
+                    router.push('/playlists/new')
+                }}
+            ><Icon.Plus /></button>
+
             <List
                 name='Playlists'
                 list={playlists}
-                onSelect={onSelectPlaylist} 
-                />
+                onSelect={onSelectPlaylist}
+            />
             <Footer />
         </div >
     )
@@ -39,9 +49,10 @@ export async function getServerSideProps(context) {
     let result = []
     if (playlists.length > 0) {
         for (const playlist of playlists) {
-            result.push({ 
-                label: playlist.name, 
-                value: '/playlists/' +  playlist._id })
+            result.push({
+                label: playlist.name,
+                value: '/playlists/' + playlist._id
+            })
         }
     }
 

@@ -6,25 +6,28 @@ export default async function getPlaylist(req, res) {
         res.status(500).json({ message: 'Use GET request!' })
     }
 
-    await dbConnect()
-    const playlist = await Playlist
-        .findById(req.query._id)
-        .populate('songs')
+    try {
+        await dbConnect()
+        const playlist = await Playlist
+            .findById(req.query._id)
+            .populate('songs')
 
-    let songs = []
-    for (const song of playlist.songs) {
-        songs.push({
-            label: song.name,
-            value: '/songs/' + song.url,
-            selected: false
+        let songs = []
+        for (const song of playlist.songs) {
+            songs.push({
+                label: song.name,
+                value: '/songs/' + song.url,
+                selected: false
+            })
+        }
+
+        res.status(200).json({
+            message: 'Ok',
+            playlist: playlist,
+            songs: songs
         })
+    } catch (error) {
+        res.status(500).json({ message: 'Playlist not found' })
     }
 
-    if (!playlist) res.status(500).json({ message: 'Playlist not found' })
-
-    res.status(200).json({
-        message: 'Ok',
-        playlist: playlist,
-        songs: songs
-    })
 }
