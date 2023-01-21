@@ -5,10 +5,12 @@ import List from "../../components/List.js"
 import * as Icon from 'react-feather';
 import classNames from "classnames";
 import AsyncSelect from 'react-select/async';
+import { useRouter } from 'next/router'
 
 
 export default function playlist() {
-    const [playlist, setPlaylist] = useState({ name: "new" });
+    const router = useRouter()
+    const [playlist, setPlaylist] = useState({ name: "new", songs: [] });
     const [songs, setSongs] = useState([]);
 
     const [filterTimeoutState, setfilterTimeoutState] = useState('')
@@ -21,9 +23,12 @@ export default function playlist() {
     }, [])
 
     const getPlaylist = async () => {
+        setSpinner(true)
         const _id = window.location.pathname.replace('/playlists/', '')
         const res = await fetch('/api/getPlaylist?_id=' + _id)
         const resJson = await res.json()
+        setSpinner(false)
+
 
         if (res.status !== 200) {
             console.log(resJson);
@@ -78,14 +83,16 @@ export default function playlist() {
             },
             body: JSON.stringify(playlist)
         });
+        let resJson = await response.json()
 
         if (response.status === 200) {
+            setPlaylist(resJson.playlist)
             setEditMode(false)
+            router.push("/playlists/" + resJson.playlist._id)
         }
 
         if (response.status !== 200) {
-            let result = response.json()
-            console.log(result);
+            console.log(resJson);
         }
 
         e.target.disabled = false
