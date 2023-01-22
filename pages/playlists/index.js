@@ -4,10 +4,30 @@ import List from "../../components/List.js"
 import { useState, useEffect } from 'react';
 import * as Icon from 'react-feather';
 import { useRouter } from 'next/router'
+import * as common from '../../commonClient.js'
 
-export default function playlists(props) {
+
+export default function playlists() {
     const router = useRouter()
-    const [playlists, setPlaylists] = useState(JSON.parse(props.playlists));
+    const [playlists, setPlaylists] = useState([]);
+
+    useEffect(() => {
+        console.log('useEffect');
+        getPlaylists()
+    }, [])
+
+
+    const getPlaylists = async () => {
+        const res = await fetch('/api/getPlaylists?userid=' + common.userId())
+        const resJson = await res.json()
+
+        if (res.status !== 200) {
+            console.log(resJson);
+            return
+        }
+
+        setPlaylists(resJson.playlists)
+    }
 
     const onSelectPlaylist = (e) => {
         console.log('onSelectPlaylist');
@@ -38,25 +58,25 @@ export default function playlists(props) {
 }
 
 // Server
-import dbConnect from '../../lib/dbConnect'
-import Playlist from '../../models/Playlist'
+// import dbConnect from '../../lib/dbConnect'
+// import Playlist from '../../models/Playlist'
 
-export async function getServerSideProps(context) {
+// export async function getServerSideProps(context) {
 
-    await dbConnect()
-    const playlists = await Playlist.find()
+//     await dbConnect()
+//     const playlists = await Playlist.find()
 
-    let result = []
-    if (playlists.length > 0) {
-        for (const playlist of playlists) {
-            result.push({
-                label: playlist.name,
-                value: '/playlists/' + playlist._id
-            })
-        }
-    }
+//     let result = []
+//     if (playlists.length > 0) {
+//         for (const playlist of playlists) {
+//             result.push({
+//                 label: playlist.name,
+//                 value: '/playlists/' + playlist._id
+//             })
+//         }
+//     }
 
-    return {
-        props: { 'playlists': JSON.stringify(result) },
-    }
-}
+//     return {
+//         props: { 'playlists': JSON.stringify(result) },
+//     }
+// }

@@ -7,9 +7,7 @@ export default async function handler(req, res) {
         res.status(500).json({ message: 'Use post request!' })
     }
 
-    // let id = req.body._id
-    // if(id) delete req.body._id;
-    // if(!id) id = mongoose.Types.ObjectId();
+    if(!req.body._id) req.body._id = mongoose.Types.ObjectId();
 
     await dbConnect()
     await Song.findByIdAndUpdate(

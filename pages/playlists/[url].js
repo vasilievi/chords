@@ -6,6 +6,7 @@ import * as Icon from 'react-feather';
 import classNames from "classnames";
 import AsyncSelect from 'react-select/async';
 import { useRouter } from 'next/router'
+import * as common from '../../commonClient.js'
 
 
 export default function playlist() {
@@ -39,29 +40,15 @@ export default function playlist() {
         setSongs(resJson.songs)
     }
 
-    const loadOptions = (inputValue, callback) => {
-        // setTimeout for debounce
-        clearTimeout(filterTimeoutState)
-        setfilterTimeoutState(setTimeout(() => {
-            console.log('loadOptions');
-            fetch('/api/getSongs?name=' + inputValue)
-                .then((res) => res.json())
-                .then((resJson) => callback(resJson.songs))
-        }, 500))
-    }
-
-    const onSelectSong = (e) => {
-        console.log('onSelectSong');
-        const arrindex = e.target.attributes['arrindex'].value
-        let newSongs = [...songs]
-        newSongs[arrindex].selected = true
-        setSongs(newSongs)
-    }
-
     const edit = async () => {
         setSpinner(true)
-        const common = (await import('../../commonClient.js'))
+        //const common = (await import('../../commonClient.js'))
         let authorized = await common.checkAuth()
+        const userId = common.userId()
+        setPlaylist({
+            ...playlist,
+            user: userId
+        })
         setSpinner(false)
 
         if (authorized) {
@@ -129,7 +116,28 @@ export default function playlist() {
             <List
                 name={playlist.name}
                 list={songs}
-                onSelect={onSelectSong}
+                onSelect={(e) => {
+                    console.log('onSelectSong');
+                    const arrindex = e.target.attributes['arrindex'].value
+                    let newSongs = [...songs]
+                    newSongs[arrindex].selected = true
+                    setSongs(newSongs)
+                }}
+                onChangeName={(e) => {
+                    console.log('onChangeName');
+                    setPlaylist({
+                        ...playlist,
+                        name: e.target.value
+                    })
+                }}
+                onRemoveFromList={(e) => {
+                    console.log('onRemoveFromList');
+                    const arrindex = e.target.attributes['arrindex'].value
+                    let newSongs = [...songs]
+                    newSongs.splice(arrindex, 1)
+                    setSongs(newSongs)
+                }}
+                editMode={editMode}
             />
 
             <AsyncSelect
@@ -137,13 +145,20 @@ export default function playlist() {
                 instanceId="long-value-select"
                 className={classNames("text-dark", "m-3", { 'd-none': !editMode })}
                 defaultOptions={[]}
-                loadOptions={loadOptions}
+                loadOptions={(inputValue, callback) => {
+                    // setTimeout for debounce
+                    clearTimeout(filterTimeoutState)
+                    setfilterTimeoutState(setTimeout(() => {
+                        console.log('loadOptions');
+                        fetch('/api/getSongs?name=' + inputValue)
+                            .then((res) => res.json())
+                            .then((resJson) => callback(resJson.songs))
+                    }, 500))
+                }}
                 placeholder='Add song'
                 components={{ DropdownIndicator: () => null, IndicatorSeparator: () => null }}
                 onChange={(selectedValue) => {
                     console.log('onChange');
-                    // let newSongs = [...songs]
-                    // newSongs.push(selectedValue)
                     setPlaylist({
                         ...playlist,
                         songs: [...playlist.songs, selectedValue._id]
