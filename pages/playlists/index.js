@@ -51,7 +51,7 @@ export default function playlists() {
                 <span className="visually-hidden">Loading...</span>
             </div>
 
-            <button type="button" className='btn btn-outline-warning m-3'
+            <button type="button" className='btn btn-outline-light m-3'
                 onClick={() => {
                     router.push('/playlists/new')
                 }}

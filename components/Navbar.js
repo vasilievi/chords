@@ -15,10 +15,14 @@ export default function Navbar(props) {
 
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem('user'))
-        if(user) setPhonenumber(user.phonenumber)
+        if (user) setPhonenumber(user.phonenumber)
+        setSpinner(true)
         import('../commonClient.js')
             .then((common) => common.checkAuth())
-            .then((res) => setauthorized(res))
+            .then((res) => {
+                setauthorized(res)
+                setSpinner(false)
+            })
     }, [])
 
     const loadOptions = (inputValue, callback) => {
@@ -102,6 +106,13 @@ export default function Navbar(props) {
                                             <div className='col-auto'>All songs</div>
                                         </div>
                                     </Link>
+                                </li>
+                                <li className="nav-item">
+                                    <div
+                                        className={classNames('spinner-grow', 'text-light', { 'd-none': !spinner })}
+                                        role="status">
+                                        <span className="visually-hidden">Loading...</span>
+                                    </div>
                                 </li>
                                 <li className="nav-item">
                                     <Link

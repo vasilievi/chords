@@ -17,6 +17,8 @@ export default function playlist() {
     const [filterTimeoutState, setfilterTimeoutState] = useState('')
     const [editMode, setEditMode] = useState(false);
     const [spinner, setSpinner] = useState(false);
+    const [editable, setEditable] = useState(true);
+    
 
     useEffect(() => {
         console.log('useEffect');
@@ -34,6 +36,11 @@ export default function playlist() {
         if (res.status !== 200) {
             console.log(resJson);
             return
+        }
+
+        if(resJson.playlist.user != common.userId()) {
+            console.log('!');
+            setEditable(false)
         }
 
         setPlaylist(resJson.playlist)
@@ -92,7 +99,7 @@ export default function playlist() {
             <Navbar logo='Home' />
 
             <div className='row m-3'>
-                <div className='col-auto'>
+                <div className={classNames('col-auto', { 'd-none': !editable })}>
                     <button
                         className={classNames('btn', 'btn-outline-warning', { 'd-none': !editMode })}
                         onClick={save}
@@ -163,7 +170,10 @@ export default function playlist() {
                         ...playlist,
                         songs: [...playlist.songs, selectedValue._id]
                     })
-                    setSongs([...songs, selectedValue])
+                    setSongs([...songs, {
+                        label: selectedValue.label,
+                        value: '/songs/' + selectedValue.value
+                    }])
                 }}
             />
 
