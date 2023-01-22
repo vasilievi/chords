@@ -5,11 +5,14 @@ import { useState, useEffect } from 'react';
 import * as Icon from 'react-feather';
 import { useRouter } from 'next/router'
 import * as common from '../../commonClient.js'
+import classNames from "classnames";
+
 
 
 export default function playlists() {
     const router = useRouter()
     const [playlists, setPlaylists] = useState([]);
+    const [spinner, setSpinner] = useState(false);
 
     useEffect(() => {
         console.log('useEffect');
@@ -18,6 +21,7 @@ export default function playlists() {
 
 
     const getPlaylists = async () => {
+        setSpinner(true)
         const res = await fetch('/api/getPlaylists?userid=' + common.userId())
         const resJson = await res.json()
 
@@ -27,6 +31,7 @@ export default function playlists() {
         }
 
         setPlaylists(resJson.playlists)
+        setSpinner(false)
     }
 
     const onSelectPlaylist = (e) => {
@@ -40,6 +45,11 @@ export default function playlists() {
     return (
         <div className="bg-black vh-100">
             <Navbar logo="Best chords" />
+            <div
+                className={classNames("spinner-grow", "text-light", { 'd-none': !spinner })}
+                role="status">
+                <span className="visually-hidden">Loading...</span>
+            </div>
 
             <button type="button" className='btn btn-outline-warning m-3'
                 onClick={() => {

@@ -24,7 +24,7 @@ export default function List(props) {
                     <div key={index}
                         className={classNames("list-group-item", "bg-black")}>
                         <div className="row">
-                            <div className="col-9">
+                            <div className={classNames({'col-9': editMode })}>
                                 <Link
                                     className={classNames("cursor-pointer", {
                                         'text-white': !item.selected,
@@ -36,7 +36,7 @@ export default function List(props) {
                                     {item.label}
                                 </Link>
                             </div>
-                            <div className="col-3">
+                            <div className={classNames({'col-3': editMode })}>
                                 <button
                                     className={classNames('btn', 'btn-outline-warning', { 'd-none': !editMode })}
                                     arrindex={index}
