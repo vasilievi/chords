@@ -22,5 +22,7 @@ export const checkAuth = async () => {
 export const userId = () => {
     console.log('userId');
     const user = JSON.parse(localStorage.getItem('user'))
-    return user._id
+    let userId = ''
+    if(user) userId = user._id
+    return userId
 }
