@@ -44,7 +44,7 @@ import Song from '../../models/Song'
 export async function getServerSideProps(context) {
 
     await dbConnect()
-    const songs = await Song.find()
+    const songs = await Song.find().sort({name: 1})
 
     let result = []
     if (songs.length > 0) {
