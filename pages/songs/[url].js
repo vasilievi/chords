@@ -100,7 +100,7 @@ export default function song(props) {
     }
 
     if (response.status !== 200) {
-      let result = response.json()
+      let result = await response.json()
       console.log(result);
     }
 
