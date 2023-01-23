@@ -4,6 +4,7 @@ import Playlist from '../../models/Playlist'
 export default async function getPlaylist(req, res) {
     if (req.method !== 'GET') {
         res.status(500).json({ message: 'Use GET request!' })
+        return
     }
 
     try {

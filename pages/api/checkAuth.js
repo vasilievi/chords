@@ -4,6 +4,7 @@ import User from '../../models/User'
 export default async function checkAuth(req, res) {
     if (req.method !== 'POST') {
         res.status(500).json({ message: 'Use post request!' })
+        return
     }
 
     await dbConnect()

@@ -73,7 +73,8 @@ export default function playlist() {
         let response = await fetch('/api/postPlaylist', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json;charset=utf-8'
+                'Content-Type': 'application/json;charset=utf-8',
+                'X-Auth-Token': common.token()
             },
             body: JSON.stringify(playlist)
         });

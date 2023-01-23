@@ -7,7 +7,7 @@ import Footer from "../../components/Footer.js"
 import HighlightText from "../../components/HighlightText"
 import * as Icon from 'react-feather';
 import classNames from "classnames";
-
+import * as common from '../../commonClient.js'
 
 // Client
 export default function song(props) {
@@ -89,7 +89,8 @@ export default function song(props) {
     let response = await fetch('/api/postSong', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json;charset=utf-8'
+        'Content-Type': 'application/json;charset=utf-8',
+        'X-Auth-Token': common.token()
       },
       body: JSON.stringify(song)
     });

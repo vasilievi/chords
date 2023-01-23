@@ -26,3 +26,11 @@ export const userId = () => {
     if(user) userId = user._id
     return userId
 }
+
+export const token = () => {
+    console.log('token');
+    const user = JSON.parse(localStorage.getItem('user'))
+    let token = ''
+    if(user) token = user.token
+    return token
+}

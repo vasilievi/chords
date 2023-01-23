@@ -2,7 +2,7 @@ export default function Footer(props) {
 
     return (
         <div className="bg-black text-light p-3">
-            <p className="text-center">2023 Chords-one.Vercel.app (230122)</p>
+            <p className="text-center">2023 Chords-one.Vercel.app (230123)</p>
         </div>
     )
 }
