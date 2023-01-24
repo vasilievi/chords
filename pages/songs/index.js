@@ -41,10 +41,11 @@ export default function songs(props) {
 import dbConnect from '../../lib/dbConnect'
 import Song from '../../models/Song'
 
-export async function getServerSideProps(context) {
+//export async function getServerSideProps(context) {
+export async function getStaticProps(context) {
 
     await dbConnect()
-    const songs = await Song.find().sort({name: 1})
+    const songs = await Song.find().sort({ name: 1 })
 
     let result = []
     if (songs.length > 0) {
@@ -59,5 +60,6 @@ export async function getServerSideProps(context) {
 
     return {
         props: { 'songs': JSON.stringify(result) },
+        revalidate: 10,
     }
 }

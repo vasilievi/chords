@@ -66,27 +66,3 @@ export default function playlists() {
         </div >
     )
 }
-
-// Server
-// import dbConnect from '../../lib/dbConnect'
-// import Playlist from '../../models/Playlist'
-
-// export async function getServerSideProps(context) {
-
-//     await dbConnect()
-//     const playlists = await Playlist.find()
-
-//     let result = []
-//     if (playlists.length > 0) {
-//         for (const playlist of playlists) {
-//             result.push({
-//                 label: playlist.name,
-//                 value: '/playlists/' + playlist._id
-//             })
-//         }
-//     }
-
-//     return {
-//         props: { 'playlists': JSON.stringify(result) },
-//     }
-// }
