@@ -13,6 +13,11 @@ import * as common from '../../commonClient.js'
 export default function song(props) {
 
   const router = useRouter()
+  
+  if (router.isFallback) {
+    return <div>Loading...</div>
+  }
+
   const [editMode, setEditMode] = useState(false);
   const [spinner, setSpinner] = useState(false);
   const [scrolling, setScrolling] = useState(false);
