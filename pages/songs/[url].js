@@ -107,7 +107,7 @@ export default function song(props) {
     e.target.disabled = false
     setSpinner(false)
 
-    if(!song._id) router.push('/songs/' + song.url)
+    if (!song._id) router.push('/songs/' + song.url)
   }
 
   const startScroll = () => {
@@ -233,21 +233,36 @@ export default function song(props) {
   )
 }
 
+
 // Server
 import dbConnect from '../../lib/dbConnect'
 import Song from '../../models/Song'
 
-export async function getServerSideProps(context) {
+export async function getStaticPaths() {
 
   await dbConnect()
-  const song = await Song.findOne({ url: context.params.url })
+  const songs = await Song.find()
 
-  let result = { url: context.params.url, name: 'new', text: 'new', key: 'C' }
+  const paths = songs.map((song) => ({
+    params: { url: song.url },
+  }))
+
+  return { paths, fallback: false }
+}
+
+export async function getStaticProps({ params }) {
+
+  await dbConnect()
+  const song = await Song.findOne({ url: params.url })
+
+  let result = { url: params.url, name: 'new', text: 'new', key: 'C' }
   if (song) {
     result = song
   }
 
   return {
     props: { 'song': JSON.stringify(result) },
+    revalidate: 10,
   }
+
 }
