@@ -1,2 +1,2 @@
 # Chords base on Next.js
-* see [deployment](chords-one.vercel.app)
+* see [deployment](https://chords-one.vercel.app)
