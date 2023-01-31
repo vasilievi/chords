@@ -1,0 +1,6 @@
+{
+  "appId": "app.vercel.chords",
+  "appName": "Best chords",
+  "webDir": "out",
+  "bundledWebRuntime": false
+}

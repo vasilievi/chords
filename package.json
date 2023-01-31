@@ -3,6 +3,9 @@
     "dev": "next dev"
   },
   "dependencies": {
+    "@capacitor/android": "^4.6.2",
+    "@capacitor/cli": "^4.6.2",
+    "@capacitor/core": "^4.6.2",
     "bootstrap": "^5.2.3",
     "chord-transposer": "^3.0.1",
     "classnames": "^2.3.2",
