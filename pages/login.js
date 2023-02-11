@@ -18,6 +18,16 @@ export default function login(props) {
         if (user.code.length === 4) checkAuth()
     }, [user.code])
 
+    useEffect(() => {
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'F10') {
+                console.log(event.key);
+                event.preventDefault()
+            }
+        });
+    }, [])
+
+
     const [codeSent, setCodeSent] = useState(false)
 
     const auth = async () => {
