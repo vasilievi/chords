@@ -218,7 +218,7 @@ export default function song(props) {
             value={song.text}
             onChange={(e) => {
               setSong({ ...song, text: e.target.value })
-              autoHeight()
+              //autoHeight()
             }}></textarea>
         </div>
 
