@@ -177,7 +177,7 @@ export default function song(props) {
 
         <div className='row mb-3'>
           <div className='col-auto'>
-            <div className='btn-group'>
+            {/* <div className='btn-group'> */}
               <button
                 className={classNames('btn', 'btn-outline-warning', { 'd-none': !editMode })}
                 onClick={save}
@@ -187,7 +187,7 @@ export default function song(props) {
                 className={classNames('btn', 'btn-outline-light', { 'd-none': editMode })}
                 onClick={edit}
               ><Icon.Edit /></button>
-            </div>
+            {/* </div> */}
           </div>
           <div className='col-auto'>
             <div
