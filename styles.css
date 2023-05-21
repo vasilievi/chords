@@ -18,3 +18,14 @@
 .cursor-pointer {
     cursor: pointer;
 }
+
+.fixed_button {
+    position: fixed;
+    bottom: 100px;
+    right: 50px;
+    z-index: 999;
+}
+
+.transparent {
+    background-color: transparent;
+}

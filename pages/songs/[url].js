@@ -13,7 +13,7 @@ import * as common from '../../commonClient.js'
 export default function song(props) {
 
   const router = useRouter()
-  
+
   if (router.isFallback) {
     return <div>Loading...</div>
   }
@@ -120,7 +120,7 @@ export default function song(props) {
     const timerId = setInterval(() => {
       console.log('scrolling');
       window.scrollTo(0, document.documentElement.scrollTop + 10);
-    }, 1000);
+    }, 900);
     localStorage.setItem('timerId', timerId)
   }
 
@@ -179,14 +179,6 @@ export default function song(props) {
           <div className='col-auto'>
             <div className='btn-group'>
               <button
-                className={classNames('btn', 'btn-outline-light', { 'd-none': scrolling })}
-                onClick={startScroll}><Icon.PlayCircle /></button>
-
-              <button
-                className={classNames('btn', 'btn-outline-warning', { 'd-none': !scrolling })}
-                onClick={stopScroll}><Icon.StopCircle /></button>
-
-              <button
                 className={classNames('btn', 'btn-outline-warning', { 'd-none': !editMode })}
                 onClick={save}
               >Save</button>
@@ -232,6 +224,27 @@ export default function song(props) {
         </div>
 
       </div>
+
+      <button
+        className={classNames(
+          'btn',
+          'btn-outline-light',
+          'transparent',
+          'fixed_button',
+          { 'd-none': scrolling }
+        )}
+        onClick={startScroll}><Icon.PlayCircle />
+      </button>
+
+      <button
+        className={classNames(
+          'btn',
+          'btn-outline-warning',
+          'transparent',
+          'fixed_button',
+          { 'd-none': !scrolling })}
+        onClick={stopScroll}><Icon.StopCircle />
+      </button>
 
       <Footer />
     </div>
