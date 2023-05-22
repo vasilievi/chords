@@ -20,6 +20,7 @@ export default function song(props) {
 
   const [editMode, setEditMode] = useState(false);
   const [spinner, setSpinner] = useState(false);
+  const [showVideo, setShowVideo] = useState(false);
   const [scrolling, setScrolling] = useState(false);
 
   let propSong = JSON.parse(props.song)
@@ -152,9 +153,12 @@ export default function song(props) {
 
         {/* Buttons */}
         <div className='row mb-3'>
+
+          {/* Key */}
           <div className="col-auto">
             <label className="col-form-label bg-black text-white">Key</label>
           </div>
+
           <div className="col-auto">
             <input
               disabled={(editMode) ? false : true}
@@ -166,6 +170,8 @@ export default function song(props) {
               }}
             />
           </div>
+
+          {/* Transpose */}
           <div className="col-auto">
             <div className='btn-group'>
               <button className='btn btn-outline-light' onClick={transposeUp}><Icon.Plus /></button>
@@ -175,19 +181,18 @@ export default function song(props) {
           </div>
         </div>
 
+        {/* Edit & Save */}
         <div className='row mb-3'>
           <div className='col-auto'>
-            {/* <div className='btn-group'> */}
-              <button
-                className={classNames('btn', 'btn-outline-warning', { 'd-none': !editMode })}
-                onClick={save}
-              >Save</button>
+            <button
+              className={classNames('btn', 'btn-outline-warning', { 'd-none': !editMode })}
+              onClick={save}
+            >Save</button>
 
-              <button
-                className={classNames('btn', 'btn-outline-light', { 'd-none': editMode })}
-                onClick={edit}
-              ><Icon.Edit /></button>
-            {/* </div> */}
+            <button
+              className={classNames('btn', 'btn-outline-light', { 'd-none': editMode })}
+              onClick={edit}
+            ><Icon.Edit /></button>
           </div>
           <div className='col-auto'>
             <div
@@ -195,7 +200,6 @@ export default function song(props) {
               role="status">
               <span className="visually-hidden">Loading...</span>
             </div>
-
           </div>
         </div>
 
@@ -223,28 +227,71 @@ export default function song(props) {
           />
         </div>
 
+        <div className='row mb-3'>
+
+          {/* Video */}
+          <div className="col-auto">
+            <label className="col-form-label bg-black text-white">Video</label>
+          </div>
+
+          <div className="col-auto">
+            <input
+              disabled={(editMode) ? false : true}
+              className="form-control bg-black text-white"
+              value={song.video}
+              onChange={(e) => {
+                console.log('onChange video');
+                setSong({ ...song, video: e.target.value })
+              }}
+            />
+          </div>
+        </div>
+
       </div>
+
+      {/* Scroll start */}
+      <button
+        className={classNames(
+          'btn',
+          'btn-outline-light',
+          'transparent',
+          'fixed_button_right',
+          { 'd-none': scrolling }
+        )}
+        onClick={startScroll}><Icon.PlayCircle />
+      </button>
+
+      {/* Scroll stop */}
+      <button
+        className={classNames(
+          'btn',
+          'btn-outline-warning',
+          'transparent',
+          'fixed_button_right',
+          { 'd-none': !scrolling })}
+        onClick={stopScroll}><Icon.StopCircle />
+      </button>
 
       <button
         className={classNames(
           'btn',
           'btn-outline-light',
           'transparent',
-          'fixed_button',
-          { 'd-none': scrolling }
-        )}
-        onClick={startScroll}><Icon.PlayCircle />
+          'fixed_button_center')}
+        onClick={() => {
+          setShowVideo(!showVideo)
+        }}><Icon.Video />
       </button>
 
-      <button
-        className={classNames(
-          'btn',
-          'btn-outline-warning',
-          'transparent',
-          'fixed_button',
-          { 'd-none': !scrolling })}
-        onClick={stopScroll}><Icon.StopCircle />
-      </button>
+
+      {/* Video */}
+      <div className={classNames(
+        'fixed_video',
+        { 'd-none': !showVideo }
+      )}>
+        <iframe width="300" src={song.video} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share">
+        </iframe>
+      </div>
 
       <Footer />
     </div>

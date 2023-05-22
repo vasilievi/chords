@@ -19,13 +19,27 @@
     cursor: pointer;
 }
 
-.fixed_button {
+.fixed_button_right {
     position: fixed;
-    bottom: 100px;
+    bottom: 150px;
     right: 50px;
+    z-index: 999;
+}
+
+.fixed_button_center {
+    position: fixed;
+    bottom: 150px;
+    right: 120px;
     z-index: 999;
 }
 
 .transparent {
     background-color: transparent;
+}
+
+.fixed_video {
+    position: fixed;
+    bottom: 10px;
+    right: 50px;
+    z-index: 800;
 }
