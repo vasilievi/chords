@@ -120,8 +120,8 @@ export default function song(props) {
     setScrolling(true)
     const timerId = setInterval(() => {
       console.log('scrolling');
-      window.scrollTo(0, document.documentElement.scrollTop + 10);
-    }, 900);
+      window.scrollTo(0, document.documentElement.scrollTop + song.scrollSpeed);
+    }, 1000);
     localStorage.setItem('timerId', timerId)
   }
 
@@ -200,6 +200,21 @@ export default function song(props) {
               role="status">
               <span className="visually-hidden">Loading...</span>
             </div>
+          </div>
+          {/* Speed */}
+          <div className="col-auto">
+            <label className="col-form-label bg-black text-white">Speed</label>
+          </div>
+          <div className="col-auto">
+            <input
+              disabled={(editMode) ? false : true}
+              size="4"
+              className="form-control bg-black text-white"
+              value={song.scrollSpeed}
+              onChange={(e) => {
+                setSong({ ...song, scrollSpeed: e.target.value })
+              }}
+            />
           </div>
         </div>
 
@@ -302,6 +317,7 @@ export default function song(props) {
 // Server
 import dbConnect from '../../lib/dbConnect'
 import Song from '../../models/Song'
+import { setConfig } from 'next/config.js';
 
 export async function getStaticPaths() {
 

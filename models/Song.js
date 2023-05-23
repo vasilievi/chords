@@ -5,7 +5,8 @@ const SongSchema = new mongoose.Schema({
   name: String,
   text: String,
   key: String,
-  video: String
+  video: String,
+  scrollSpeed: Number
 })
 
 export default mongoose.models.Song || mongoose.model('Song', SongSchema)
