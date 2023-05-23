@@ -20,7 +20,7 @@ export default function song(props) {
 
   const [editMode, setEditMode] = useState(false);
   const [spinner, setSpinner] = useState(false);
-  const [showVideo, setShowVideo] = useState(false);
+  const [showVideo, setShowVideo] = useState(true);
   const [scrolling, setScrolling] = useState(false);
 
   let propSong = JSON.parse(props.song)
