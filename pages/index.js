@@ -10,7 +10,7 @@ export default function homePage() {
     return (
         <div className="bg-black  vh-100">
             <Head>
-                <meta name="yandex-verification" content="ed4a5645e0e5c7d8" />
+                <meta name="yandex-verification" content="a398bff78d219f39" />
             </Head>
             <Navbar logo="Best chords" />
             <Carousel />
