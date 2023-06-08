@@ -10,7 +10,7 @@ export default function homePage() {
     return (
         <div className="bg-black  vh-100">
             <Head>
-                <meta name="yandex-verification" content="a398bff78d219f39" />
+                <title>Best guitar chords</title>
             </Head>
             <Navbar logo="Best chords" />
             <Carousel />

@@ -4,6 +4,8 @@ import List from "../../components/List.js"
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react';
 import * as Icon from 'react-feather';
+import Head from 'next/head'
+
 
 export default function songs(props) {
     const [songs, setSongs] = useState(JSON.parse(props.songs));
@@ -20,6 +22,10 @@ export default function songs(props) {
     return (
         <div className="bg-black vh-100">
             <Navbar logo="Home" />
+
+            <Head>
+                <title>Chords list</title>
+            </Head>
 
             <button type="button" className='btn btn-outline-warning m-3'
                 onClick={() => {

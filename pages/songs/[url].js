@@ -8,6 +8,8 @@ import HighlightText from "../../components/HighlightText"
 import * as Icon from 'react-feather';
 import classNames from "classnames";
 import * as common from '../../commonClient.js'
+import Head from 'next/head'
+
 
 // Client
 export default function song(props) {
@@ -135,8 +137,13 @@ export default function song(props) {
     <div className="bg-black">
       <Navbar logo='Home' />
 
+      <Head>
+        <title>{song.name}</title>
+      </Head>
+
+
       <div className="m-3">
-        {/* Header */}
+        {/* Song name */}
         <textarea
           className="form-control font-monospace form-control-lg bg-black text-warning mb-3"
           disabled={(editMode) ? false : true}
