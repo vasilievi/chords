@@ -6,7 +6,7 @@ const Sitemap = () => {
 import dbConnect from '../lib/dbConnect'
 import Song from '../models/Song'
 
-export const getStaticProps = async ({ res }) => {
+export const getServerSideProps = async ({ res }) => {
     await dbConnect()
     const songs = await Song.find().sort({ name: 1 })
 
