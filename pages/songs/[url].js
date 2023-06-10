@@ -140,6 +140,7 @@ export default function song(props) {
       <Head>
         <title>{song.name}</title>
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <meta name="description" content={song.name + ' lyrics and chords. Autoscroll chords and play video at the same time.'}></meta>
       </Head>
 
 
