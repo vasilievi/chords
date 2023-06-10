@@ -11,6 +11,7 @@ export default function homePage() {
         <div className="bg-black  vh-100">
             <Head>
                 <title>Best guitar chords</title>
+                <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
             </Head>
             <Navbar logo="Best chords" />
             <Carousel />

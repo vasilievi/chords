@@ -139,6 +139,7 @@ export default function song(props) {
 
       <Head>
         <title>{song.name}</title>
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
       </Head>
 
 

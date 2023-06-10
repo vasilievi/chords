@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation'
 import Router from "next/router";
 import classNames from "classnames";
+import Head from 'next/head'
 
 export default function login(props) {
     const router = useRouter();
@@ -71,6 +72,11 @@ export default function login(props) {
 
     return (
         <div className="bg-black">
+            <Head>
+                <title>Login to chords</title>
+                <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+            </Head>
+
             <Navbar logo="Best chords" />
             <main className="d-flex w-100">
                 <div className="container d-flex flex-column">

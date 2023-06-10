@@ -25,6 +25,7 @@ export default function songs(props) {
 
             <Head>
                 <title>Chords list</title>
+                <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
             </Head>
 
             <button type="button" className='btn btn-outline-warning m-3'
