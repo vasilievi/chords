@@ -26,6 +26,7 @@ export default function songs(props) {
             <Head>
                 <title>Chords list</title>
                 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+                <meta name="description" content={'Worlds best songs with lyrics and chords. Autoscroll chords and play video at the same time.'}></meta>
             </Head>
 
             <button type="button" className='btn btn-outline-warning m-3'

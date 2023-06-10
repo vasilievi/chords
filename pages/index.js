@@ -12,6 +12,7 @@ export default function homePage() {
             <Head>
                 <title>Best guitar chords</title>
                 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+                <meta name="description" content={'Worlds best songs with lyrics and chords. Autoscroll chords and play video at the same time.'}></meta>
             </Head>
             <Navbar logo="Best chords" />
             <Carousel />
