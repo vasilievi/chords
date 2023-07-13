@@ -118,10 +118,25 @@ export default function song(props) {
     if (!song._id) router.push('/songs/' + song.url)
   }
 
+  const nextSong = async () => {
+    console.log('nextSong');
+    let response = await fetch('/api/nextSong?id=' + song._id);
+
+    if (response.status === 200) {
+      let result = await response.json()
+      router.push('/songs/'+result.song)
+      console.log(result);
+    }
+  }
+
   const startScroll = () => {
     setScrolling(true)
     const timerId = setInterval(() => {
-      console.log('scrolling');
+      console.log('scrolling ' + document.documentElement.scrollTop);
+      if ((window.innerHeight + Math.round(window.scrollY)) >= document.body.offsetHeight) {
+        console.log('Документ прокручен вниз');
+        nextSong()
+      }
       window.scrollTo(0, document.documentElement.scrollTop + song.scrollSpeed);
     }, 1000);
     localStorage.setItem('timerId', timerId)
@@ -135,7 +150,7 @@ export default function song(props) {
 
   return (
     <div className="bg-black">
-      <Navbar logo='Home' />
+      <Navbar logo='Songs' url='/songs' />
 
       <Head>
         <title>{song.name}</title>
@@ -315,6 +330,10 @@ export default function song(props) {
       )}>
         <iframe width="300" src={song.video} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share">
         </iframe>
+      </div>
+
+      <div className='mh-100-px'>
+
       </div>
 
       <Footer />

@@ -14,7 +14,7 @@ export default function homePage() {
                 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
                 <meta name="description" content={'Worlds best songs with lyrics and chords. Autoscroll chords and play video at the same time.'}></meta>
             </Head>
-            <Navbar logo="Best chords" />
+            <Navbar logo="Songs" url='/songs' />
             <Carousel />
             <div className="bg-black d-flex justify-content-center">
                 <Link

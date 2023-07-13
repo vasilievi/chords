@@ -21,7 +21,7 @@ export default function songs(props) {
 
     return (
         <div className="bg-black vh-100">
-            <Navbar logo="Home" />
+            <Navbar logo='Home'/>
 
             <Head>
                 <title>Chords list</title>

@@ -7,6 +7,8 @@ import { useState, useEffect } from 'react';
 import classNames from "classnames";
 
 export default function Navbar(props) {
+    let homeUrl = '/'
+    if (props.url) homeUrl = props.url
     const router = useRouter();
     const [spinner, setSpinner] = useState(false);
     const [filterTimeoutState, setfilterTimeoutState] = useState('')
@@ -56,7 +58,7 @@ export default function Navbar(props) {
             <nav className="navbar navbar-dark bg-dark fixed-top">
                 <div className="container-fluid">
                     <Link
-                        href="/"
+                        href={homeUrl}
                         className={classNames('text-white', 'no-underline', { 'd-none': spinner })}
                     >{props.logo}
                     </Link>
