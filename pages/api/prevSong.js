@@ -12,7 +12,6 @@ export default async function handler(req, res) {
     const songs = await Song.find().sort({ name: 1 })
 
     let result = '/'
-    let songFound = false
     let i = 0
     for (const song of songs) {
         if (song._id == req.query.id) {

@@ -146,7 +146,7 @@ export default function song(props) {
       console.log('scrolling ' + document.documentElement.scrollTop);
       if ((window.innerHeight + Math.round(window.scrollY)) >= document.body.offsetHeight) {
         console.log('Документ прокручен вниз');
-        nextSong()
+        stopScroll()
       }
       window.scrollTo(0, document.documentElement.scrollTop + song.scrollSpeed);
     }, 1000);
