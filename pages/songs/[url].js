@@ -332,7 +332,8 @@ export default function song(props) {
       <button
         className={classNames(
           'btn',
-          'btn-outline-light',
+          {'btn-outline-light':!showVideo},
+          {'btn-outline-warning':showVideo},
           'transparent',
           'fixed_button_right_190')}
         onClick={() => {
