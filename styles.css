@@ -19,17 +19,31 @@
     cursor: pointer;
 }
 
-.fixed_button_right {
+.fixed_button_right_50 {
     position: fixed;
     bottom: 150px;
     right: 50px;
     z-index: 999;
 }
 
-.fixed_button_center {
+.fixed_button_right_120 {
     position: fixed;
     bottom: 150px;
     right: 120px;
+    z-index: 999;
+}
+
+.fixed_button_right_190 {
+    position: fixed;
+    bottom: 150px;
+    right: 190px;
+    z-index: 999;
+}
+
+.fixed_button_right_260 {
+    position: fixed;
+    bottom: 150px;
+    right: 260px;
     z-index: 999;
 }
 
