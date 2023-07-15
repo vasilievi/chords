@@ -17,7 +17,7 @@ export default async function handler(req, res) {
     for (const song of songs) {
         if (song._id == req.query.id) {
             if (i === 0) i = 1
-            result = songs[i - 1]
+            result = songs[i - 1].url
             break
         }
         i++
