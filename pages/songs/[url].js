@@ -315,7 +315,7 @@ export default function song(props) {
           'btn',
           'btn-outline-warning',
           'transparent',
-          'fixed_button_right_50')}
+          'fixed_button_right_20')}
           onClick={shuffleSong}
         ><Icon.Shuffle />
       </button>
@@ -325,7 +325,7 @@ export default function song(props) {
           'btn',
           'btn-outline-warning',
           'transparent',
-          'fixed_button_right_120')}
+          'fixed_button_right_90')}
           onClick={nextSong}
         ><Icon.SkipForward />
       </button>
@@ -335,7 +335,7 @@ export default function song(props) {
           'btn',
           'btn-outline-light',
           'transparent',
-          'fixed_button_right_190',
+          'fixed_button_right_160',
           { 'd-none': scrolling })}
         onClick={startScroll}><Icon.PlayCircle />
       </button>
@@ -345,7 +345,7 @@ export default function song(props) {
           'btn',
           'btn-outline-warning',
           'transparent',
-          'fixed_button_right_190',
+          'fixed_button_right_160',
           { 'd-none': !scrolling })}
         onClick={stopScroll}><Icon.StopCircle />
       </button>
@@ -356,7 +356,7 @@ export default function song(props) {
           {'btn-outline-light':!showVideo},
           {'btn-outline-warning':showVideo},
           'transparent',
-          'fixed_button_right_260')}
+          'fixed_button_right_230')}
         onClick={() => {
           setShowVideo(!showVideo)
         }}><Icon.Video />
@@ -367,7 +367,7 @@ export default function song(props) {
           'btn',
           'btn-outline-warning',
           'transparent',
-          'fixed_button_right_330')}
+          'fixed_button_right_300')}
           onClick={prevSong}
         ><Icon.SkipBack />
       </button>

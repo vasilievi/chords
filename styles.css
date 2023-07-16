@@ -19,38 +19,38 @@
     cursor: pointer;
 }
 
-.fixed_button_right_50 {
+.fixed_button_right_20 {
     position: fixed;
     bottom: 150px;
-    right: 50px;
+    right: 20px;
     z-index: 999;
 }
 
-.fixed_button_right_120 {
+.fixed_button_right_90 {
     position: fixed;
     bottom: 150px;
-    right: 120px;
+    right: 90px;
     z-index: 999;
 }
 
-.fixed_button_right_190 {
+.fixed_button_right_160 {
     position: fixed;
     bottom: 150px;
-    right: 190px;
+    right: 160px;
     z-index: 999;
 }
 
-.fixed_button_right_260 {
+.fixed_button_right_230 {
     position: fixed;
     bottom: 150px;
-    right: 260px;
+    right: 230px;
     z-index: 999;
 }
 
-.fixed_button_right_330 {
+.fixed_button_right_300 {
     position: fixed;
     bottom: 150px;
-    right: 330px;
+    right: 300px;
     z-index: 999;
 }
 
