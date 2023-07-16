@@ -124,7 +124,7 @@ export default function song(props) {
 
     if (response.status === 200) {
       let result = await response.json()
-      router.push('/songs/'+result.song)
+      router.push('/songs/' + result.song)
       console.log(result);
     }
   }
@@ -135,7 +135,7 @@ export default function song(props) {
 
     if (response.status === 200) {
       let result = await response.json()
-      router.push('/songs/'+result.song)
+      router.push('/songs/' + result.song)
       console.log(result);
     }
   }
@@ -146,7 +146,7 @@ export default function song(props) {
 
     if (response.status === 200) {
       let result = await response.json()
-      router.push('/songs/'+result.song)
+      router.push('/songs/' + result.song)
       console.log(result);
     }
   }
@@ -316,8 +316,8 @@ export default function song(props) {
           'btn-outline-warning',
           'transparent',
           'fixed_button_right_20')}
-          onClick={shuffleSong}
-        ><Icon.Shuffle />
+        onClick={shuffleSong}
+      ><Icon.Shuffle />
       </button>
 
       <button
@@ -326,8 +326,8 @@ export default function song(props) {
           'btn-outline-warning',
           'transparent',
           'fixed_button_right_90')}
-          onClick={nextSong}
-        ><Icon.SkipForward />
+        onClick={nextSong}
+      ><Icon.SkipForward />
       </button>
 
       <button
@@ -353,8 +353,8 @@ export default function song(props) {
       <button
         className={classNames(
           'btn',
-          {'btn-outline-light':!showVideo},
-          {'btn-outline-warning':showVideo},
+          { 'btn-outline-light': !showVideo },
+          { 'btn-outline-warning': showVideo },
           'transparent',
           'fixed_button_right_230')}
         onClick={() => {
@@ -368,8 +368,8 @@ export default function song(props) {
           'btn-outline-warning',
           'transparent',
           'fixed_button_right_300')}
-          onClick={prevSong}
-        ><Icon.SkipBack />
+        onClick={prevSong}
+      ><Icon.SkipBack />
       </button>
 
       {/* Video */}
@@ -377,7 +377,7 @@ export default function song(props) {
         'fixed_video',
         { 'd-none': !showVideo }
       )}>
-        <iframe width="300" src={song.video} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share">
+        <iframe width="300" src={song.video + '?autoplay=1&mute=1'} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share">
         </iframe>
       </div>
 
