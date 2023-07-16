@@ -140,6 +140,17 @@ export default function song(props) {
     }
   }
 
+  const shuffleSong = async () => {
+    console.log('shuffleSong');
+    let response = await fetch('/api/shuffleSong?id=' + song._id);
+
+    if (response.status === 200) {
+      let result = await response.json()
+      router.push('/songs/'+result.song)
+      console.log(result);
+    }
+  }
+
   const startScroll = () => {
     setScrolling(true)
     const timerId = setInterval(() => {
@@ -305,6 +316,16 @@ export default function song(props) {
           'btn-outline-warning',
           'transparent',
           'fixed_button_right_50')}
+          onClick={shuffleSong}
+        ><Icon.Shuffle />
+      </button>
+
+      <button
+        className={classNames(
+          'btn',
+          'btn-outline-warning',
+          'transparent',
+          'fixed_button_right_120')}
           onClick={nextSong}
         ><Icon.SkipForward />
       </button>
@@ -314,7 +335,7 @@ export default function song(props) {
           'btn',
           'btn-outline-light',
           'transparent',
-          'fixed_button_right_120',
+          'fixed_button_right_190',
           { 'd-none': scrolling })}
         onClick={startScroll}><Icon.PlayCircle />
       </button>
@@ -324,7 +345,7 @@ export default function song(props) {
           'btn',
           'btn-outline-warning',
           'transparent',
-          'fixed_button_right_120',
+          'fixed_button_right_190',
           { 'd-none': !scrolling })}
         onClick={stopScroll}><Icon.StopCircle />
       </button>
@@ -335,7 +356,7 @@ export default function song(props) {
           {'btn-outline-light':!showVideo},
           {'btn-outline-warning':showVideo},
           'transparent',
-          'fixed_button_right_190')}
+          'fixed_button_right_260')}
         onClick={() => {
           setShowVideo(!showVideo)
         }}><Icon.Video />
@@ -346,7 +367,7 @@ export default function song(props) {
           'btn',
           'btn-outline-warning',
           'transparent',
-          'fixed_button_right_260')}
+          'fixed_button_right_330')}
           onClick={prevSong}
         ><Icon.SkipBack />
       </button>

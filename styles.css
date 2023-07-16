@@ -47,6 +47,13 @@
     z-index: 999;
 }
 
+.fixed_button_right_330 {
+    position: fixed;
+    bottom: 150px;
+    right: 330px;
+    z-index: 999;
+}
+
 .transparent {
     background-color: transparent;
 }
