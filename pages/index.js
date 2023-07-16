@@ -13,6 +13,7 @@ export default function homePage() {
                 <title>Best guitar chords</title>
                 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
                 <meta name="description" content={'Worlds best songs with lyrics and chords. Autoscroll chords and play video at the same time.'}></meta>
+                <meta name="google-site-verification" content="wanzAzNQTBpP10eyayWNVdDdtqRPKhwJs-7E5ngD_fA" />
             </Head>
             <Navbar logo="Songs" url='/songs' />
             <Carousel />
