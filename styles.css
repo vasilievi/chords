@@ -21,35 +21,35 @@
 
 .fixed_button_right_20 {
     position: fixed;
-    bottom: 150px;
+    bottom: 10px;
     right: 20px;
     z-index: 999;
 }
 
 .fixed_button_right_90 {
     position: fixed;
-    bottom: 150px;
+    bottom: 10px;
     right: 90px;
     z-index: 999;
 }
 
 .fixed_button_right_160 {
     position: fixed;
-    bottom: 150px;
+    bottom: 10px;
     right: 160px;
     z-index: 999;
 }
 
 .fixed_button_right_230 {
     position: fixed;
-    bottom: 150px;
+    bottom: 10px;
     right: 230px;
     z-index: 999;
 }
 
 .fixed_button_right_300 {
     position: fixed;
-    bottom: 150px;
+    bottom: 10px;
     right: 300px;
     z-index: 999;
 }
@@ -60,7 +60,7 @@
 
 .fixed_video {
     position: fixed;
-    bottom: 10px;
+    bottom: 50px;
     right: 50px;
     z-index: 800;
 }
